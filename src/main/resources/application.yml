@@ -13,3 +13,8 @@ spring:
     generate-ddl: true
     hibernate:
       ddl-auto: update
+
+pizza_strore:
+  app:
+    jwt-secret: cybersoftpizzaastoreapplication
+    jwt-duration: 86400000
