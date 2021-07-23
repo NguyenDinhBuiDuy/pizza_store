@@ -22,10 +22,10 @@ import io.jsonwebtoken.UnsupportedJwtException;
 public class JwtUtils {
 private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 	
-	@Value("${gira.app.jwt-secret}")
+	@Value("${pizza_store.app.jwt-secret}")
 	private String jwtSecret;
 	
-	@Value("${gira.app.jwt-duration}")
+	@Value("${pizza_store.app.jwt-duration}")
 	private Long jwtDuration;
 
 	public String generateJwtToken(Authentication authentication) {
