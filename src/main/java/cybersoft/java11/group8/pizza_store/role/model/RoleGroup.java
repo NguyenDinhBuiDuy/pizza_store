@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -29,7 +30,7 @@ public class RoleGroup extends AbstractEntity {
 	
 	@NotBlank(message = "{role_group.name.notblank}")
 	@Length ( min = 4 , max = 50, message = "{role_group.name.length}")
-	@UniqueRoleGroupName
+	@Column (unique = true)
 	private String roleGroupName;
 	
 	@NotBlank(message = "{role_group.description.notblank}")
