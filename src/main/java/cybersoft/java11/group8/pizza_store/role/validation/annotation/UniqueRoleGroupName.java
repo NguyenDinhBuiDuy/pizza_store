@@ -8,14 +8,14 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
+import cybersoft.java11.group8.pizza_store.role.validation.validator.UniqueRoleGroupNameValidator;
 import cybersoft.java11.group8.pizza_store.role.validation.validator.UniqueRolenameValidator;
 
-
-@Constraint (validatedBy = UniqueRolenameValidator.class)
+@Constraint (validatedBy = UniqueRoleGroupNameValidator.class)
 @Target(ElementType.FIELD)
-@Retention( RetentionPolicy.RUNTIME) // quy dinh khi nao annotation co tac dung
-public @interface UniqueRoleName {
-	public String message() default "Rolename is already used";
+@Retention( RetentionPolicy.RUNTIME)
+public @interface UniqueRoleGroupName {
+	public String message() default "Role group name is already used";
 	
 	public Class <?>[] groups() default {};
 	

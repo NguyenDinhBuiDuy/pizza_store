@@ -41,8 +41,8 @@ public class RoleGruopController {
 	public ResponseEntity<Object> saveRoleGroup (@Valid @ RequestBody CreateRoleGroupDTO dto, BindingResult errors){
 		if (errors.hasErrors())
 			return new ResponseEntity<>(errors.getAllErrors(), HttpStatus.BAD_REQUEST);
-		RoleGroup roleGroup = new RoleGroup().name(dto.getGroupName()).description(dto.getDescription());
-		_service.save(roleGroup);
+		RoleGroup roleGroup = new RoleGroup();
+		_service.save(dto);
 		return ResponseHandler.getResponse(roleGroup, HttpStatus.CREATED);
 	}
 	

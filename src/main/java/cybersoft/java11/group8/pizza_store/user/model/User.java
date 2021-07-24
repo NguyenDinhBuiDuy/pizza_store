@@ -11,7 +11,9 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
@@ -22,6 +24,7 @@ import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import cybersoft.java11.group8.pizza_store.common_data.model.AbstractEntity;
+import cybersoft.java11.group8.pizza_store.role.model.Role;
 import cybersoft.java11.group8.pizza_store.role.model.RoleGroup;
 import cybersoft.java11.group8.pizza_store.user.util.UserStatus;
 import lombok.Getter;
@@ -30,7 +33,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "gira_user")
+@Table(name = "pizza_store_user")
 public class User extends AbstractEntity {
 	@NotBlank(message = "{user.username.notblank}")
 	@Size(min = 3, max = 50, message = "{user.username.size}")
@@ -64,6 +67,10 @@ public class User extends AbstractEntity {
 	@ManyToMany(mappedBy = "users")
 	@JsonIgnore
 	private Set<RoleGroup> roleGroups = new HashSet<>();
+	
+	@ManyToOne ( fetch = FetchType.LAZY)
+	@JoinColumn(name = "role_id", insertable = false, updatable = false)
+	private Role role;
 	
 
 	public User username(String username) {

@@ -34,8 +34,8 @@ public class SwaggerConfig {
 	
 	private ApiInfo getApiInfo() {
 		return new ApiInfoBuilder()
-			.title("Gira Application")
-			.description("API for education purpose.")
+			.title("pizza_store Application")
+			.description("API for graduation project.")
 			.contact(new Contact("Nguyen Dinh Bui Duy", "thienduybmt25021997@gmail.com", "BuiDuy.dev"))
 			.license("MIT2")
 			.build();

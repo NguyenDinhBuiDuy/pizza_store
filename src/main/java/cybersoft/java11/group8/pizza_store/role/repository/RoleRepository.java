@@ -10,21 +10,17 @@ import org.springframework.data.repository.query.Param;
 
 import cybersoft.java11.group8.pizza_store.role.model.Role;
 
-
 public interface RoleRepository extends JpaRepository<Role, Long> {
-	List<Role> findByRolename(String roleName);
+	Role findByRolename(String roleName);
 
 	List<Role> findByDescriptionContainingOrderByIdAsc(String description);
 
-	/*
-	 * dùng @Query để viết câu query theo cú pháp của HQL hoặc SQL thuần
-	 */
 	@Query("SELECT r FROM Role r WHERE r.rolename=:rolename AND r.description IS NOT NULL")
 	List<Role> findRoleWithNotNullDescription(@Param("rolename") String rolename);
 
 	int countByRolename(String rolename);
 
 	@Override
-	@EntityGraph (attributePaths = {"goups"},
-	type = EntityGraphType.FETCH)
-	public List<Role> findAll() ;}
+	@EntityGraph(attributePaths = { "goups" }, type = EntityGraphType.FETCH)
+	public List<Role> findAll();
+}
