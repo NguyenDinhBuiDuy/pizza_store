@@ -1,0 +1,20 @@
+# Server Configuration
+server:
+  port: 8086
+
+#Data Configuration
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pizza_store
+    username: postgres
+    password: admin
+  jpa:
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+
+pizza_strore:
+  app:
+    jwt-secret: cybersoftpizzaastoreapplication
+    jwt-duration: 86400000
