@@ -27,14 +27,14 @@ public class SwaggerConfig {
 				.securityContexts(Arrays.asList(securityContext()))
 				.securitySchemes(Arrays.asList(apiKey()))
 				.select()
-				.apis(RequestHandlerSelectors.basePackage("cybersoft.javabackend.java11.pizza_store"))
+				.apis(RequestHandlerSelectors.basePackage("cybersoft.java11.group8.pizza_store"))
 				.build()
 				.apiInfo(getApiInfo());
 	}
 	
 	private ApiInfo getApiInfo() {
 		return new ApiInfoBuilder()
-			.title("Pizza Store Application")
+			.title("pizza_store Application")
 			.description("API for education purpose.")
 			.contact(new Contact("Nguyen Dinh Bui Duy", "thienduybmt25021997@gmail.com", "BuiDuy.dev"))
 			.license("MIT2")

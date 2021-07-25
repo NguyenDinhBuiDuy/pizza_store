@@ -41,7 +41,7 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 		Iterator<RoleGroup> iterator = roleGroups.iterator();
 		
 		while(iterator.hasNext()) 
-			authorities.add(new SimpleGrantedAuthority(iterator.next().getGroupName()));
+			authorities.add(new SimpleGrantedAuthority(iterator.next().getRoleGroupName()));
 			
 		return authorities;
 	}

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cybersoft.java11.group8.pizza_store.common_data.model.ResponseHandler;
 import cybersoft.java11.group8.pizza_store.role.dto.CreateRoleDTO;
-import cybersoft.java11.group8.pizza_store.role.dto.RoleWithAccountsDTO;
 import cybersoft.java11.group8.pizza_store.role.model.Role;
 import cybersoft.java11.group8.pizza_store.role.service.RoleService;
 
@@ -41,10 +40,10 @@ public class RoleController {
 	}
 	@GetMapping("/{role_name}")
 	public ResponseEntity<Object> findByRoleName (@PathVariable("role_name") String roleName){
-		List<Role> roles = _service.findByRoleName(roleName);
-		if (roles.isEmpty())
+		Role role = _service.findByRoleName(roleName);
+		if (role == null )
 		return ResponseHandler.getResponse("there is no data", HttpStatus.OK);
-		return ResponseHandler.getResponse(roles, HttpStatus.OK);
+		return ResponseHandler.getResponse(role, HttpStatus.OK);
 	}
 	@GetMapping("/description/{role-name}")
 	public ResponseEntity<Object> findRoleWithoutBlankDescription(@PathVariable("role-name") String roleName){
@@ -54,16 +53,6 @@ public class RoleController {
 			return ResponseHandler.getResponse( HttpStatus.NO_CONTENT);
 		
 		return ResponseHandler.getResponse( roles, HttpStatus.OK);
-	}
-	
-	@GetMapping("/with-account")
-	public ResponseEntity<List<RoleWithAccountsDTO>> findRoleWithAccountInfo(){
-		List<RoleWithAccountsDTO> roles = _service.findRoleWithAccountInfo();
-		
-		if(roles.isEmpty())
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		
-		return new ResponseEntity<>(roles, HttpStatus.OK);
 	}
 	
 	@GetMapping("/description")

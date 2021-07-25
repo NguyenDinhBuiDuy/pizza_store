@@ -16,6 +16,6 @@ public interface RoleGroupRepository extends JpaRepository<RoleGroup, Long> {
 	@EntityGraph (attributePaths = {"roles", "users"},
 	type = EntityGraphType.FETCH)
 	public List<RoleGroup> findAll() ;
-	
 
+	public int countByRoleGroupName(String roleGroupName);
 }

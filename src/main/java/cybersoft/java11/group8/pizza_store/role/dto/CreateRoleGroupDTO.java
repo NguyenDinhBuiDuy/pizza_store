@@ -1,32 +1,31 @@
 package cybersoft.java11.group8.pizza_store.role.dto;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import cybersoft.java11.group8.pizza_store.role.validation.annotation.UniqueRoleGroupName;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class CreateRoleGroupDTO {
-	public String getGroupName() {
-		return groupName;
-	}
-
-	public void setGroupName(String groupName) {
-		this.groupName = groupName;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	@NotBlank(message = "role name can't be blank")
-	@Length ( min = 4 , max = 50, message = "role name length is between {0} and {1}.")
-	private String groupName;
 	
-	@NotBlank(message = "role description can't be blank")
-	@Length ( min = 4 , max = 255, message = "role description length is between {0} and {1}.")
+	@NotBlank(message = "{role_group.name.notblank}")
+	@Length ( min = 4 , max = 50, message = "{role_group.name.length}")
+	@UniqueRoleGroupName
+	private String roleGroupName;
+	
+	@NotBlank(message = "{role_group.description.notblank}")
+	@Length ( min = 4 , max = 255, message = "{role_group.description.length}")
 	private String description;
+	
+	@NotNull
+	private Set<String> roleNames = new HashSet<>();
 
 }

@@ -6,16 +6,16 @@ import javax.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cybersoft.java11.group8.pizza_store.role.service.RoleService;
-import cybersoft.java11.group8.pizza_store.role.validation.annotation.UniqueRolename;
+import cybersoft.java11.group8.pizza_store.role.validation.annotation.UniqueRoleName;
 
 
-public class UniqueRolenameValidator implements ConstraintValidator<UniqueRolename, String> {
+public class UniqueRolenameValidator implements ConstraintValidator<UniqueRoleName, String> {
 	
 	@Autowired
 	private RoleService _service;
 	private String message;
 	@Override
-	public void initialize (UniqueRolename constraintAnnotation) {
+	public void initialize (UniqueRoleName constraintAnnotation) {
 		this.message = constraintAnnotation.message();
 	}
 
@@ -25,7 +25,7 @@ public class UniqueRolenameValidator implements ConstraintValidator<UniqueRolena
 		if (!isTakenRolename)
 			return true;
 		
-		context.buildConstraintViolationWithTemplate(rolename)
+		context.buildConstraintViolationWithTemplate(message)
 		.addConstraintViolation()
 		.disableDefaultConstraintViolation();
 		return false;

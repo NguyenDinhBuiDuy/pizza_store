@@ -1,6 +1,7 @@
 package cybersoft.java11.group8.pizza_store.role.model;
 
 import java.util.HashSet;
+
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -16,9 +17,14 @@ import org.hibernate.validator.constraints.Length;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import cybersoft.java11.group8.pizza_store.common_data.model.AbstractEntity;
+import cybersoft.java11.group8.pizza_store.user.model.User;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
-@Table(name = "gira_role")
+@Table(name = "pizza_store_role")
 public class Role extends AbstractEntity{
 	
 	@NotBlank(message = "role name can't be blank")
@@ -29,10 +35,6 @@ public class Role extends AbstractEntity{
 	@NotBlank(message = "role description can't be blank")
 	@Length ( min = 4 , max = 255, message = "role description length is between {0} and {1}.")
 	private String description;
-	
-	@OneToMany (mappedBy = "role", fetch = FetchType.LAZY)
-	@JsonIgnore
-	Set<Account> accounts;
 	
 	@ManyToMany( mappedBy = "roles", fetch = FetchType.LAZY)
 	private Set<RoleGroup> groups = new HashSet<>();
@@ -47,49 +49,19 @@ public class Role extends AbstractEntity{
 		return this;
 	}
 	
+	public Role id(Long roleId) {
+		this.id = roleId;
+		return this;
+	}
+	
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
 		return String.format("ROLE: %d %s %s", id, rolename, description);
 	}
 
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	public String getRolename() {
-		return rolename;
-	}
-	public void setRolename(String roleName) {
-		this.rolename = roleName;
-	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
-	public Set<Account> getAccounts() {
-		return accounts;
-	}
-	public void setAccounts(Set<Account> accounts) {
-		this.accounts = accounts;
-	}
+	
 
-	public Set<RoleGroup> getGroups() {
-		return groups;
-	}
-
-	public void setGroups(Set<RoleGroup> groups) {
-		this.groups = groups;
-	}
-
-	public Role id(Long roleId) {
-		this.id = roleId;
-		return this;
-	}
 	
 
 }
