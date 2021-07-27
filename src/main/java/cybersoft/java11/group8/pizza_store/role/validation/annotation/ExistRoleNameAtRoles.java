@@ -11,9 +11,9 @@ import javax.validation.Payload;
 import cybersoft.java11.group8.pizza_store.role.validation.validator.ExistRoleNameValidator;
 
 @Constraint(validatedBy = ExistRoleNameValidator.class)
-@Target(ElementType.FIELD)
+@Target({ElementType.PARAMETER,ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExistRoleName {
+public @interface ExistRoleNameAtRoles {
 	
 	public String message() default "Role name is not exist";
 

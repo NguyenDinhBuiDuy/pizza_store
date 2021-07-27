@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import cybersoft.java11.group8.pizza_store.role.validation.annotation.ExistRoleNameAtRoles;
 import cybersoft.java11.group8.pizza_store.role.validation.annotation.UniqueRoleGroupName;
 import lombok.Getter;
 import lombok.Setter;
@@ -24,8 +25,5 @@ public class CreateRoleGroupDTO {
 	@NotBlank(message = "{role_group.description.notblank}")
 	@Length ( min = 4 , max = 255, message = "{role_group.description.length}")
 	private String description;
-	
-	@NotNull
-	private Set<String> roleNames = new HashSet<>();
 
 }
