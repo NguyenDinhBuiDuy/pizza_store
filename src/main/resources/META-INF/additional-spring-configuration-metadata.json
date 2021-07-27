@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "pizza_strore.app.jwt-secret",
+    "type": "java.lang.String",
+    "description": "A description for 'pizza_strore.app.jwt-secret'"
+  },
+  {
+    "name": "pizza_strore.app.jwt-duration",
+    "type": "java.lang.String",
+    "description": "A description for 'pizza_strore.app.jwt-duration'"
+  }
+]}
