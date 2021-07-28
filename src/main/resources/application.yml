@@ -12,8 +12,10 @@ spring:
     show-sql: true
     generate-ddl: true
     hibernate:
-      ddl-auto: create-drop
-
+      ddl-auto: update
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
 pizza_store:
   app:
     jwt-secret: cybersoftpizzaastoreapplication
