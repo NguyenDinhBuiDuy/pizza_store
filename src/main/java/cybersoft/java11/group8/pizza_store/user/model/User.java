@@ -40,22 +40,22 @@ public class User extends AbstractEntity {
 	@Column(unique = true)
 	private String username;
 
-	@NotBlank
+	@NotBlank(message = "{user.password.notblank}")
 	private String password;
-
-	@NotBlank
+	
+	@NotBlank(message = "{user.email.notblank}")
 	@Email
 	private String email;
-
-	@NotBlank
+	
+	@NotBlank(message = "{user.fullname.notblank}")
 	private String fullname;
-
-	@NotBlank
+	
+	@NotBlank(message = "{user.displayname.notblank}")
 	private String displayname;
-
+	
 	private String avatar;
 
-	@NotNull
+	@NotNull(message = "{user.status.notnull}")
 	@Enumerated(EnumType.STRING)
 	private UserStatus status;
 

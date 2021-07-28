@@ -15,7 +15,7 @@ import cybersoft.java11.group8.pizza_store.role.validation.validator.ExistRoleNa
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExistRoleNameAtRoles {
 	
-	public String message() default "Role name is not exist";
+	public String message() default "role name is not existed";
 
 	public Class<?>[] groups() default {};
 

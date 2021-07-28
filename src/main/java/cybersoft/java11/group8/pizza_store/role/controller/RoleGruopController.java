@@ -26,6 +26,7 @@ import cybersoft.java11.group8.pizza_store.role.model.Role;
 import cybersoft.java11.group8.pizza_store.role.model.RoleGroup;
 import cybersoft.java11.group8.pizza_store.role.service.RoleGroupService;
 import cybersoft.java11.group8.pizza_store.role.validation.annotation.ExistRoleNameAtRoles;
+import cybersoft.java11.group8.pizza_store.role.validation.annotation.ExistUserNameAtUsers;
 
 
 @RestController
@@ -42,7 +43,7 @@ public class RoleGruopController {
 		return ResponseHandler.getResponse(roleGroups, HttpStatus.OK);
 	}
 	
-	@GetMapping("/{group-id}")
+	@GetMapping("/{group-id}/role")
 	public ResponseEntity<Object> findRoleInGruop(@Valid @PathVariable ("group-id") @NotNull Long id, @RequestBody @NotNull String roleName, BindingResult error){
 		if (error.hasErrors())
 			return ResponseHandler.getResponse(error, HttpStatus.BAD_REQUEST);
@@ -53,7 +54,7 @@ public class RoleGruopController {
 		return ResponseHandler.getResponse(HttpStatus.OK);
 	}
 	
-	@GetMapping("/{group-id}")
+	@GetMapping("/{group-id}/user")
 	public ResponseEntity<Object> findUserInGruop(@Valid @PathVariable ("group-id") @NotNull Long id, @RequestBody @NotNull String userName, BindingResult error){
 		if (error.hasErrors())
 			return ResponseHandler.getResponse(error, HttpStatus.BAD_REQUEST);
@@ -81,7 +82,7 @@ public class RoleGruopController {
 	}
 	
 	@PutMapping("/{group-id}/username")
-	public ResponseEntity<Object>addUserToGroup (@Valid @RequestBody String username, @PathVariable ("group-id") Long groupId, BindingResult errors){
+	public ResponseEntity<Object>addUserToGroup (@Valid @RequestBody @ExistUserNameAtUsers String username, @PathVariable ("group-id") Long groupId, BindingResult errors){
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		RoleGroup updateGroup = _service.addUsername(username, groupId);
@@ -95,27 +96,27 @@ public class RoleGruopController {
 		boolean result = _service.deleteRoleGroupById (groupId);
 		if (result)
 			return ResponseHandler.getResponse( HttpStatus.OK);
-		return ResponseHandler.getResponse( HttpStatus.BAD_REQUEST);
+		return ResponseHandler.getResponse( "role group is not presented",HttpStatus.BAD_REQUEST);
 	}
 	
-	@PutMapping("/{group-id}")
+	@DeleteMapping("/{group-id}/role")
 	public ResponseEntity<Object>deleteRoleInGroup (@Valid @RequestBody String roleName, @PathVariable ("group-id") Long groupId, BindingResult errors){
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse( errors, HttpStatus.BAD_REQUEST);
 		boolean result = _service.deleteRoleInRoleGroup (groupId,roleName);
 		if (result)
 			return ResponseHandler.getResponse( HttpStatus.OK);
-		return ResponseHandler.getResponse( HttpStatus.BAD_REQUEST);
+		return ResponseHandler.getResponse("role is not presented", HttpStatus.BAD_REQUEST);
 	}
 	
-	@PutMapping("/{group-id}")
+	@DeleteMapping("/{group-id}/user")
 	public ResponseEntity<Object>deleteUserInGroup (@Valid @RequestBody String userName, @PathVariable ("group-id") Long groupId, BindingResult errors){
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse( errors, HttpStatus.BAD_REQUEST);
 		boolean result = _service.deleteUserInRoleGroup (groupId,userName);
 		if (result)
 			return ResponseHandler.getResponse( HttpStatus.OK);
-		return ResponseHandler.getResponse( HttpStatus.BAD_REQUEST);
+		return ResponseHandler.getResponse("user is not presented", HttpStatus.BAD_REQUEST);
 	}
 	
 	

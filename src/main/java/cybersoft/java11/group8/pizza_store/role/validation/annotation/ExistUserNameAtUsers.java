@@ -8,15 +8,15 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import cybersoft.java11.group8.pizza_store.role.validation.validator.IsPresentRoleInRoleGroupValidator;
+import cybersoft.java11.group8.pizza_store.role.validation.validator.ExistUserNameAtUsersValidator;
 
 
-@Constraint(validatedBy = IsPresentRoleInRoleGroupValidator.class)
-@Target(ElementType.FIELD)
+@Constraint(validatedBy = ExistUserNameAtUsersValidator.class)
+@Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface isPresentRoleInRoleGroup {
+public @interface ExistUserNameAtUsers {
 	
-	public String message() default "Rolename is presented in role group";
+	public String message() default "user name is not existed at users";
 
 	public Class<?>[] groups() default {};
 

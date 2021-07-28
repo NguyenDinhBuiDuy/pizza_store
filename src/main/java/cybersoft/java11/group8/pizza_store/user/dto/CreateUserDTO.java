@@ -19,26 +19,25 @@ public class CreateUserDTO {
 	@NotBlank (message = "{user.username.notblank}")
 	@Size (min = 3, max = 50, message = "{user.username.size}")
 	@Column (unique = true)
-	
 	@UniqueUsername
 	private String username;
 	
-	@NotBlank	(message = "{user.password.notblank}")
+	@NotBlank(message = "{user.password.notblank}")
 	private String password;
 	
-	@NotBlank
+	@NotBlank(message = "{user.email.notblank}")
 	@Email
 	private String email;
 	
-	@NotBlank
+	@NotBlank(message = "{user.fullname.notblank}")
 	private String fullname;
 	
-	@NotBlank
+	@NotBlank(message = "{user.displayname.notblank}")
 	private String displayname;
 	
 	private String avatar;
 	
-	@NotNull
+	@NotNull (message = "{user.status.notnull}")
 	@Enumerated(EnumType.STRING)
 	private UserStatus status;
 

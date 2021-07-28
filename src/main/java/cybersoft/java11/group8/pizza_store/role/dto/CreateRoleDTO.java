@@ -15,7 +15,7 @@ public class CreateRoleDTO {
 	
 	@NotBlank(message = "{role.name.notblank}")
 	@Length(min = 4, max = 50, message = "{role.name.size}")
-	@UniqueRoleName(message = "role name is already used")
+	@UniqueRoleName
 	private String rolename;
 
 	@NotBlank(message = "{role.description.notblank}")

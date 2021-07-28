@@ -11,11 +11,15 @@ import org.springframework.stereotype.Service;
 import cybersoft.java11.group8.pizza_store.role.dto.CreateRoleDTO;
 import cybersoft.java11.group8.pizza_store.role.model.Role;
 import cybersoft.java11.group8.pizza_store.role.repository.RoleRepository;
-
+import cybersoft.java11.group8.pizza_store.util.MapDTOToModel;
+import lombok.AllArgsConstructor;
+@AllArgsConstructor
 @Service
 public class RoleServiceImpl implements RoleService {
-	@Autowired
+
 	private RoleRepository _roleRepository;
+	
+	private MapDTOToModel mapper;
 
 	@Override
 	public void save(Role role) {
@@ -46,8 +50,7 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public Role updateRoleInfo(CreateRoleDTO dto, Long roleId) {
 		Role role = _roleRepository.getOne(roleId);
-		role.roleName(dto.getRolename())
-		.description(dto.getDescription());
+		Role Update = (Role) mapper.map(dto, role);
 
 		return _roleRepository.save(role);
 	}

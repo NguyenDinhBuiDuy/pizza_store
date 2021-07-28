@@ -27,13 +27,13 @@ import lombok.Setter;
 @Table(name = "pizza_store_role")
 public class Role extends AbstractEntity{
 	
-	@NotBlank(message = "role name can't be blank")
-	@Length ( min = 4 , max = 50, message = "role name length is between {0} and {1}.")
+	@NotBlank(message = "{role.name.notblank}")
+	@Length ( min = 4 , max = 50, message = "{role.name.length}")
 	@Column (unique = true)
 	private String rolename;
 	
-	@NotBlank(message = "role description can't be blank")
-	@Length ( min = 4 , max = 255, message = "role description length is between {0} and {1}.")
+	@NotBlank(message = "{role.description.notblank}")
+	@Length ( min = 4 , max = 255, message = "{role.description.length}")
 	private String description;
 	
 	@ManyToMany( mappedBy = "roles", fetch = FetchType.LAZY)
