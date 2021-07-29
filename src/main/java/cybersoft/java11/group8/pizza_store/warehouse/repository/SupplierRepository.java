@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 import cybersoft.java11.group8.pizza_store.warehouse.model.Supplier;
 
 @Repository
-public interface SupplierRepository extends JpaRepository<Supplier, Integer> {
+public interface SupplierRepository extends JpaRepository<Supplier, Long> {
 
+	Supplier findSuplierByName(String name);
+	
 }
