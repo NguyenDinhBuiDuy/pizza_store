@@ -13,7 +13,7 @@ import cybersoft.java11.group8.pizza_store.role.validation.validator.UniqueRolen
 
 @Constraint (validatedBy = UniqueRolenameValidator.class)
 @Target(ElementType.FIELD)
-@Retention( RetentionPolicy.RUNTIME) // quy dinh khi nao annotation co tac dung
+@Retention( RetentionPolicy.RUNTIME)
 public @interface UniqueRoleName {
 	public String message() default "Rolename is already used";
 	

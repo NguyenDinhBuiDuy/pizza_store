@@ -17,4 +17,5 @@ public interface RoleService {
 	boolean deleteRoleById(Long roleId);
 	Role save(@Valid CreateRoleDTO dto);
 	boolean isTakenRolename(String rolename);
+	boolean existById(Long roleId);
 }
