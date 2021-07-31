@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,18 +64,27 @@ public class UserController {
 	}
 	
 	@PutMapping("/{user-id}")
-	public ResponseEntity<Object> updateUser(@Valid CreateUserDTO dto, @PathVariable ("user-id") Long userId, BindingResult errors){
+	public ResponseEntity<Object> updateUser(@Valid CreateUserDTO dto, @Valid @NotNull @PathVariable ("user-id") Long userId, BindingResult errors){
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
+		
+		if (!_service.existUser(userId))
+			return ResponseHandler.getResponse("there is no user id: " + userId, HttpStatus.BAD_REQUEST);
+		
 		User user = new User();
 		user = _service.update(dto,userId);
 		return ResponseHandler.getResponse(user, HttpStatus.CREATED);
 	}
 	
 	@DeleteMapping("/{user-id}")
-	public ResponseEntity<Object> deleteUser(@Valid @PathVariable ("user-id") Long userId, BindingResult errors){
+	public ResponseEntity<Object> deleteUser(@Valid @NotNull @PathVariable ("user-id") Long userId, BindingResult errors){
+		
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
+		
+		if (!_service.existUser(userId))
+			return ResponseHandler.getResponse("there is no user id: " + userId, HttpStatus.BAD_REQUEST);
+		
 		_service.deleteById(userId);
 		return ResponseHandler.getResponse( HttpStatus.OK);
 	}

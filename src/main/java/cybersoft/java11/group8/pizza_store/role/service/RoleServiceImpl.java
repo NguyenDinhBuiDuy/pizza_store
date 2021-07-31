@@ -67,14 +67,19 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public Role save(@Valid CreateRoleDTO dto) {
-		Role role = new Role();
-		role.roleName(dto.getRolename()).description(dto.getDescription());
-		return _roleRepository.save(role);
+		Role model = new Role();
+		model = (Role) mapper.map(dto, model);
+		return _roleRepository.save(model);
 	}
 
 	@Override
 	public boolean isTakenRolename(String rolename) {
 		return _roleRepository.countByRolename(rolename) >= 1;
+	}
+
+	@Override
+	public boolean existById(Long roleId) {
+		return _roleRepository.existsById(roleId);
 	}
 
 }

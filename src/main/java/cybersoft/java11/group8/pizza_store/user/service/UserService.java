@@ -1,6 +1,7 @@
 package cybersoft.java11.group8.pizza_store.user.service;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import cybersoft.java11.group8.pizza_store.common_data.GenericService;
 import cybersoft.java11.group8.pizza_store.user.dto.CreateUserDTO;
@@ -14,5 +15,7 @@ public interface UserService extends GenericService<User, Long> {
 	boolean isTakenUsername(String username);
 
 	User update(@Valid CreateUserDTO dto, Long userId);
+
+	boolean existUser(@Valid @NotNull Long userId);
 
 }

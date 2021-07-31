@@ -73,30 +73,6 @@ public class User extends AbstractEntity {
 	private Role role;
 	
 
-	public User username(String username) {
-		this.username = username;
-		return this;
-	}
-	public User password(String password) {
-		this.password = password;
-		return this;
-	}
-	public User email(String email) {
-		this.email = email;
-		return this;
-	}
-	public User fullname (String fullname) {
-		this.fullname = fullname;
-		return this;
-	}
-	public User displayname (String displayname) {
-		this.displayname = displayname;
-		return this;
-	}
-	public User status (UserStatus status) {
-		this.status = status;
-		return this;
-	}
 	
 	
 }

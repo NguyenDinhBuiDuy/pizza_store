@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 
 import cybersoft.java11.group8.pizza_store.role.dto.CreateRoleGroupDTO;
+import cybersoft.java11.group8.pizza_store.role.dto.UpdateDTO;
 import cybersoft.java11.group8.pizza_store.role.model.Role;
 import cybersoft.java11.group8.pizza_store.role.model.RoleGroup;
 import cybersoft.java11.group8.pizza_store.role.repository.RoleGroupRepository;
@@ -151,6 +152,19 @@ public class RoleGroupServiceImpl implements RoleGroupService {
 				return true;
 		}
 		return false;
+	}
+
+	@Override
+	public RoleGroup updateRoleGroup(@Valid CreateRoleGroupDTO dto, Long groupId) {
+		RoleGroup group = _roleGroupRepository.getOne(groupId);
+		group = (RoleGroup) mapper.map(dto, group);
+		return _roleGroupRepository.save(group);
+	}
+
+	@Override
+	public boolean existRoleGroup(Long groupId) {
+		
+		return _roleGroupRepository.existsById(groupId);
 	}
 
 

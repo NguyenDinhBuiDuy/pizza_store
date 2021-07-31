@@ -1,6 +1,7 @@
 package cybersoft.java11.group8.pizza_store.user.service;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -42,6 +43,11 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
 		updateUser = (User) mapper.map(dto, user);
 		
 		return _repository.save(updateUser);
+	}
+
+	@Override
+	public boolean existUser(@Valid @NotNull Long userId) {
+		return _repository.existsById(userId);
 	}
 
 }

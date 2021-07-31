@@ -1,6 +1,5 @@
 package cybersoft.java11.group8.pizza_store.role.validation.validator;
 
-import java.util.Optional;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -13,8 +12,8 @@ import cybersoft.java11.group8.pizza_store.user.repository.UserRepository;
 public class ExistUserNameAtUsersValidator implements ConstraintValidator<ExistUserNameAtUsers, String>{
 	
 	@Autowired
-	UserRepository _userRepository;
-	String message ;
+	private UserRepository _userRepository;
+	private String message ;
 	
 	@Override
 	public void initialize(ExistUserNameAtUsers constraintAnnotation) {
