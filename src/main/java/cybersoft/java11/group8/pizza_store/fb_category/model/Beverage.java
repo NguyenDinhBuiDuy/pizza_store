@@ -1,0 +1,40 @@
+package cybersoft.java11.group8.pizza_store.fb_category.model;
+
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
+import cybersoft.java11.group8.pizza_store.fb_category.util.FBCategory;
+import cybersoft.java11.group8.pizza_store.fb_category.util.beverage.DrinkType;
+import cybersoft.java11.group8.pizza_store.fb_category.util.beverage.SugarPercent;
+import cybersoft.java11.group8.pizza_store.warehouse.model.RawMaterial;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@Entity
+@Table (name = "pizza_store_Beverage")
+public class Beverage extends FBCategory {
+	
+	@NotNull (message = "{beverage.sugar_percent.notnull}")
+	private SugarPercent sugarPercent;
+	
+	@NotNull (message = "{beverage.drink_type.notnull}")
+	private DrinkType drinkType;
+	
+	@ManyToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinTable (name = "raw_material_beverage_rescipes_links", 
+	joinColumns = @JoinColumn (name = "Beverage_id"),
+	inverseJoinColumns = @JoinColumn(name = "recipes_id"))
+	private Set<RawMaterial> recipes = new HashSet<RawMaterial>();
+	
+
+}
