@@ -8,14 +8,15 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import cybersoft.java11.group8.pizza_store.role.validation.validator.ExistRoleNameValidator;
+import cybersoft.java11.group8.pizza_store.role.validation.validator.ExistUserNameAtUsersValidator;
 
-@Constraint(validatedBy = ExistRoleNameValidator.class)
-@Target(ElementType.FIELD)
+
+@Constraint(validatedBy = ExistUserNameAtUsersValidator.class)
+@Target({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExistRoleName {
+public @interface ExistUserNameAtUsers {
 	
-	public String message() default "Role name is not exist";
+	public String message() default "user name is not existed at users";
 
 	public Class<?>[] groups() default {};
 

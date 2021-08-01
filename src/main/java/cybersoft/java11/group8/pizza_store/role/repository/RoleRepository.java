@@ -1,6 +1,7 @@
 package cybersoft.java11.group8.pizza_store.role.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -11,7 +12,7 @@ import org.springframework.data.repository.query.Param;
 import cybersoft.java11.group8.pizza_store.role.model.Role;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
-	Role findByRolename(String roleName);
+	Optional<Role> findByRolename(String roleName);
 
 	List<Role> findByDescriptionContainingOrderByIdAsc(String description);
 

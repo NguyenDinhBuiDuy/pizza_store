@@ -13,12 +13,9 @@ import lombok.Setter;
 @Setter
 public class CreateRoleDTO {
 	
-	@NotBlank
-	private Long id;
-	
 	@NotBlank(message = "{role.name.notblank}")
 	@Length(min = 4, max = 50, message = "{role.name.size}")
-	@UniqueRoleName(message = "role name is already used")
+	@UniqueRoleName
 	private String rolename;
 
 	@NotBlank(message = "{role.description.notblank}")
