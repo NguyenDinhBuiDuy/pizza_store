@@ -13,8 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import cybersoft.java11.group8.pizza_store.common_data.model.AbstractEntity;
-import cybersoft.java11.group8.pizza_store.fb_category.model.Beverage;
-import cybersoft.java11.group8.pizza_store.fb_category.model.Pizza;
+import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.Beverage;
+import cybersoft.java11.group8.pizza_store.fb_category.model.pizza.Pizza;
 import lombok.Getter;
 import lombok.Setter;
 

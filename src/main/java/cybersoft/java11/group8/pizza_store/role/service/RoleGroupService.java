@@ -5,7 +5,6 @@ import javax.validation.constraints.NotNull;
 
 import cybersoft.java11.group8.pizza_store.common_data.GenericService;
 import cybersoft.java11.group8.pizza_store.role.dto.CreateRoleGroupDTO;
-import cybersoft.java11.group8.pizza_store.role.dto.UpdateDTO;
 import cybersoft.java11.group8.pizza_store.role.model.RoleGroup;
 
 public interface RoleGroupService extends GenericService<RoleGroup, Long> {

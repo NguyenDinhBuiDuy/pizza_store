@@ -1,4 +1,4 @@
-package cybersoft.java11.group8.pizza_store.fb_category.model;
+package cybersoft.java11.group8.pizza_store.fb_category.model.pizza;
 
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -12,10 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import cybersoft.java11.group8.pizza_store.fb_category.util.FBCategory;
-import cybersoft.java11.group8.pizza_store.fb_category.util.pizza.PizzaDough;
-import cybersoft.java11.group8.pizza_store.fb_category.util.pizza.PizzaSauce;
-import cybersoft.java11.group8.pizza_store.fb_category.util.pizza.PizzaTopping;
+import cybersoft.java11.group8.pizza_store.fb_category.model.FBCategory;
 import cybersoft.java11.group8.pizza_store.warehouse.model.RawMaterial;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,15 +25,18 @@ public class Pizza extends FBCategory {
 	
 	@NotNull(message = "{pizza.dough.notnull}")
 	private PizzaDough dough;
+
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@JoinTable (name = "pizza_topping_links", 
+	joinColumns = @JoinColumn(name = "pizza_id"),
+	inverseJoinColumns = @JoinColumn(name = "topping_id"))
+	private Set<PizzaTopping> toppings = new HashSet<PizzaTopping>();
 	
-	private EnumSet<PizzaTopping> enumToppings = EnumSet.allOf(PizzaTopping.class);
-	
-//	@NotNull(message = "{pizza.topping.notnull}")
-//	private Set<PizzaTopping> toppings = new HashSet<PizzaTopping>(enumToppings);
-	
-	
-//	@NotNull(message = "{pizza.sauce.notnull}")
-//	private EnumSet<PizzaSauce> sauce;
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@JoinTable (name = "pizza_sauce_links", 
+	joinColumns = @JoinColumn(name = "pizza_id"),
+	inverseJoinColumns = @JoinColumn(name = "sauce_id"))
+	private Set<PizzaSauce> sauces = new HashSet<PizzaSauce>();
 	
 	@ManyToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable (name = "raw_material_pizza_rescipes_links", 

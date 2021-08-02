@@ -1,9 +1,10 @@
-package cybersoft.java11.group8.pizza_store.fb_category.util;
+package cybersoft.java11.group8.pizza_store.fb_category.model;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -22,12 +23,12 @@ import lombok.Setter;
 @Setter
 public abstract class FBCategory extends AbstractEntity{
 	
-	@UniqueFBCategoryCode
 	@NotBlank (message = "{fbcategory.code.notblank}")
+	@Column (unique = true)
 	String code;
 	
-	@UniqueFBCategoryName
 	@NotBlank (message = "{fbcategory.name.notblank}")
+	@Column (unique = true)
 	String name;
 	
 	@NotNull (message = "{fbcategory.price.notnull}")
@@ -39,5 +40,7 @@ public abstract class FBCategory extends AbstractEntity{
 	
 	@NotNull
 	FB_Status status;
+	
+	String description;
 	
 }
