@@ -43,6 +43,12 @@ public class Pizza extends FBCategory {
 	joinColumns = @JoinColumn (name = "pizza_id"),
 	inverseJoinColumns = @JoinColumn(name = "recipes_id"))
 	private Set<RawMaterial> recipes = new HashSet<RawMaterial>();
+
+	public Pizza addRawMaterial(RawMaterial rawMaterial) {
+		 this.recipes.add(rawMaterial);
+		 rawMaterial.getPizzas().add(this);
+		 return this;
+	}
 	
 	
 

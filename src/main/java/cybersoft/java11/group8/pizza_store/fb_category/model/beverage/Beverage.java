@@ -40,6 +40,11 @@ public class Beverage extends FBCategory {
 		return this;
 		
 	}
+
+	public Beverage removeRawMaterial(RawMaterial rawMaterial) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }

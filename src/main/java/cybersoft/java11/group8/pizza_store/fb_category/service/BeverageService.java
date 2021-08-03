@@ -15,4 +15,6 @@ public interface BeverageService extends GenericService<Beverage, Long>{
 
 	Beverage addRawMaterial(@Valid String rawMaterialName, @Valid @NotNull Long beverageId);
 
+	boolean removeRawMeterialInBeverage(String rawMaterialName, @Valid @NotNull Long beverageId);
+
 }

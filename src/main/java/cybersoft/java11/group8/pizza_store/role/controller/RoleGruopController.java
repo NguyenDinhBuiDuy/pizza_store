@@ -90,7 +90,7 @@ public class RoleGruopController {
 		if (!_service.existRoleGroup(groupId))
 			return ResponseHandler.getResponse("there is no role group id : " + groupId, HttpStatus.BAD_REQUEST);
 		
-		RoleGroup updateGroup = _service.updateRoleGroup(dto, groupId);
+		RoleGroup updateGroup = _service.save(dto);
 		return ResponseHandler.getResponse(updateGroup, HttpStatus.OK);
 	}
 	

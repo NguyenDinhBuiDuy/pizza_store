@@ -92,8 +92,8 @@ public class BeverageCategoryController {
 	}
 	
 	
-	@DeleteMapping("/{{beverage-id}")
-	public ResponseEntity<Object> deleteBeverage(@Valid @NotNull @PathVariable ("user-id") Long beverageId, BindingResult errors){
+	@DeleteMapping("/{beverage-id}")
+	public ResponseEntity<Object> deleteBeverage(@Valid @NotNull @PathVariable ("beverage-id") Long beverageId, BindingResult errors){
 		
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
@@ -102,19 +102,24 @@ public class BeverageCategoryController {
 			return ResponseHandler.getResponse("there is no beverage id: " + beverageId, HttpStatus.BAD_REQUEST);
 		
 		_beverageService.deleteById(beverageId);
-		return ResponseHandler.getResponse( HttpStatus.OK);
+		return ResponseHandler.getResponse("delete successfull", HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{{beverage-id}")
-	public ResponseEntity<Object> deleteRawMaterialInBeverage(@RequestBody String RawMaterialName ,@Valid @NotNull @PathVariable ("user-id") Long beverageId, BindingResult errors){
+	@DeleteMapping("/{beverage-id}/raw_material")
+	public ResponseEntity<Object> deleteRawMaterialInBeverage(@RequestBody String RawMaterialName ,@Valid @NotNull @PathVariable ("beverage-id") Long beverageId, BindingResult errors){
 		
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		
 		if (!_beverageService.existBeverage(beverageId))
 			return ResponseHandler.getResponse("there is no beverage id: " + beverageId, HttpStatus.BAD_REQUEST);
-
-		return ResponseHandler.getResponse( HttpStatus.OK);
+		
+		boolean result = _beverageService.removeRawMeterialInBeverage(RawMaterialName, beverageId);
+		
+		if (!result) 
+			return ResponseHandler.getResponse("there is no RawMaterial: " + RawMaterialName, HttpStatus.BAD_REQUEST);
+	
+		return ResponseHandler.getResponse("remove raw material: " + RawMaterialName + "successfull", HttpStatus.OK);
 	}
 	
 	

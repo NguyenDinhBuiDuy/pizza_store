@@ -134,9 +134,15 @@ public class RoleGroupServiceImpl implements RoleGroupService {
 		
 		Set<Role> roles = roleGroup.getRoles();
 		for (Role role: roles) {
-			if (role.getRolename().equals(roleName))
+			if (role.getRolename().equals(roleName)) {
 				roleGroup.getRoles().remove(role);
+				
+				roleGroup.setRoles(roles);
+				_roleGroupRepository.save(roleGroup);
+				
 				return true;
+			}
+				
 		}
 		return false;
 	}
@@ -147,18 +153,16 @@ public class RoleGroupServiceImpl implements RoleGroupService {
 		
 		Set<User> users = roleGroup.getUsers();
 		for (User user : users) {
-			if (user.getUsername().equals(userName))
+			if (user.getUsername().equals(userName)) {
 				roleGroup.getUsers().remove(user);
+				
+				roleGroup.setUsers(users);
+				_roleGroupRepository.save(roleGroup);
+				
 				return true;
+			}
 		}
 		return false;
-	}
-
-	@Override
-	public RoleGroup updateRoleGroup(@Valid CreateRoleGroupDTO dto, Long groupId) {
-		RoleGroup group = _roleGroupRepository.getOne(groupId);
-		group = (RoleGroup) mapper.map(dto, group);
-		return _roleGroupRepository.save(group);
 	}
 
 	@Override

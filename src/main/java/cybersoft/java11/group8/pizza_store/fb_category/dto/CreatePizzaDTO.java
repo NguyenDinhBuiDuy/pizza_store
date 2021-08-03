@@ -4,20 +4,18 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
 
-import cybersoft.java11.group8.pizza_store.fb_category.model.FB_Status;
-import cybersoft.java11.group8.pizza_store.fb_category.model.FB_Type;
-import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.DrinkType;
-import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.SugarPercent;
 import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.UniqueBeverageCode;
 import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.UniqueBeverageName;
+import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.UniquePizzaCode;
+import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.UniquePizzaName;
 
-public class CreateBeverageDTO {
-	
-	@UniqueBeverageCode
+public class CreatePizzaDTO {
+
+	@UniquePizzaCode
 	@NotBlank (message = "{fbcategory.code.notblank}")
 	String code;
 	
-	@UniqueBeverageName
+	@UniquePizzaName
 	@NotBlank (message = "{fbcategory.name.notblank}")
 	String name;
 	
@@ -26,5 +24,4 @@ public class CreateBeverageDTO {
 	Long price;
 	
 	String description;
-
 }

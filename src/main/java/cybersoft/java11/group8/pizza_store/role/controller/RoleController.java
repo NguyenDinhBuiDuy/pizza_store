@@ -78,7 +78,7 @@ public class RoleController {
 		if (!_service.existById(roleId))
 			return ResponseHandler.getResponse("there is no role" + dto.getRolename(), HttpStatus.BAD_REQUEST);
 
-		Role updateRole = _service.updateRoleInfo(dto, roleId);
+		Role updateRole = _service.save(dto);
 		return ResponseHandler.getResponse(updateRole, HttpStatus.OK);
 
 	}

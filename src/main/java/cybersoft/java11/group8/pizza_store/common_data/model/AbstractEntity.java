@@ -38,10 +38,10 @@ public class AbstractEntity implements Serializable{
 	protected int version;
 	
 	@CreatedBy
-	private String createdBy;
+	protected String createdBy;
 	
 	@LastModifiedDate
-	private String updatedBy;
+	protected String updatedBy;
 		
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateUtils.DATE_FORMAT)// giup json hieu nen in format date nhu da quy dinh truoc

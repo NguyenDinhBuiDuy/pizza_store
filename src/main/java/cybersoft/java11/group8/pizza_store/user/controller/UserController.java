@@ -72,7 +72,7 @@ public class UserController {
 			return ResponseHandler.getResponse("there is no user id: " + userId, HttpStatus.BAD_REQUEST);
 		
 		User user = new User();
-		user = _service.update(dto,userId);
+		user = _service.save(dto);
 		return ResponseHandler.getResponse(user, HttpStatus.CREATED);
 	}
 	

@@ -36,14 +36,6 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
 		return _repository.countByUsername(username) >= 1;
 	}
 
-	@Override
-	public User update(@Valid CreateUserDTO dto, Long userId) {
-		User user = _repository.getOne(userId);
-		User updateUser = new User();
-		updateUser = (User) mapper.map(dto, user);
-		
-		return _repository.save(updateUser);
-	}
 
 	@Override
 	public boolean existUser(@Valid @NotNull Long userId) {

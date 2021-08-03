@@ -27,8 +27,6 @@ public interface RoleGroupService extends GenericService<RoleGroup, Long> {
 
 	boolean deleteUserInRoleGroup(Long groupId, @Valid String userName);
 
-	RoleGroup updateRoleGroup(@Valid CreateRoleGroupDTO dto, Long groupId);
-
 	boolean existRoleGroup(Long groupId);
 
 }
