@@ -1,4 +1,4 @@
-package cybersoft.java11.group8.pizza_store.fb_category.validation.validator;
+package cybersoft.java11.group8.pizza_store.warehouse.validation.validator;
 
 import java.util.Optional;
 
@@ -13,24 +13,27 @@ import cybersoft.java11.group8.pizza_store.fb_category.repository.PizzaRepositor
 import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.UniqueBeverageName;
 import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.UniquePizzaCode;
 import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.UniquePizzaName;
+import cybersoft.java11.group8.pizza_store.warehouse.model.RawMaterial;
+import cybersoft.java11.group8.pizza_store.warehouse.repository.RawMaterialRepository;
+import cybersoft.java11.group8.pizza_store.warehouse.validation.annotation.UniqueRawMaterialName;
 
-public class UniquePizzaNameValidator implements ConstraintValidator<UniquePizzaName, String> {
+public class UniqueRawmaterialValidator implements ConstraintValidator<UniqueRawMaterialName, String> {
 
 	@Autowired
-	PizzaRepository _pizzaRepository;
+	RawMaterialRepository _rawMaterialRepository;
 	
 	String message;
 	
 	@Override
-	public void initialize(UniquePizzaName constraintAnnotation) {
+	public void initialize(UniqueRawMaterialName constraintAnnotation) {
 		this.message = constraintAnnotation.message();
 	}
 	
 	@Override
-	public boolean isValid(String name, ConstraintValidatorContext context) {
+	public boolean isValid(String rawMaterialName, ConstraintValidatorContext context) {
 		
-		Optional<Pizza> isExistCode = _pizzaRepository.findByName(name);
-		if (isExistCode.isEmpty())
+		Optional<RawMaterial> isExistName = _rawMaterialRepository.findByName(rawMaterialName);
+		if (isExistName.isEmpty())
 			return true;
 		
 		context.buildConstraintViolationWithTemplate(message).

@@ -10,8 +10,8 @@ import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.Beverage;
 @Repository
 public interface BeverageRepository extends JpaRepository<Beverage, Long> {
 
-//	Optional<Beverage> findByFbCode(String code);
-//
-//	Optional<Beverage> findByFbName(String name);
+	Optional<Beverage> findByCode(String code);
+
+	Optional<Beverage> findByName(String name);
 
 }

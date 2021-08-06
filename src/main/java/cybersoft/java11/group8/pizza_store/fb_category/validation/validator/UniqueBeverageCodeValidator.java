@@ -26,9 +26,9 @@ public class UniqueBeverageCodeValidator implements ConstraintValidator<UniqueBe
 	@Override
 	public boolean isValid(String code, ConstraintValidatorContext context) {
 		
-//		Optional< Beverage>  beverage = _BeverageRepository.findByFbCode(code);
-//		if (beverage.isPresent())
-//			return true;
+		Optional< Beverage>  beverage = _BeverageRepository.findByCode(code);
+		if (beverage.isPresent())
+			return true;
 		
 		context.buildConstraintViolationWithTemplate(message).
 		addConstraintViolation().

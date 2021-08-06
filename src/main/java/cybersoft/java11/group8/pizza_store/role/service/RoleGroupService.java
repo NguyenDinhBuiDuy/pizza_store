@@ -29,4 +29,6 @@ public interface RoleGroupService extends GenericService<RoleGroup, Long> {
 
 	boolean existRoleGroup(Long groupId);
 
+	RoleGroup updateRoleGroup(@Valid CreateRoleGroupDTO dto, Long groupId);
+
 }

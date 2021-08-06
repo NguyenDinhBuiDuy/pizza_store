@@ -24,8 +24,10 @@ import cybersoft.java11.group8.pizza_store.fb_category.dto.CreateBeverageDTO;
 import cybersoft.java11.group8.pizza_store.fb_category.dto.CreatePizzaDTO;
 import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.Beverage;
 import cybersoft.java11.group8.pizza_store.fb_category.model.pizza.Pizza;
+import cybersoft.java11.group8.pizza_store.fb_category.repository.PizzaRepository;
 import cybersoft.java11.group8.pizza_store.fb_category.service.BeverageService;
 import cybersoft.java11.group8.pizza_store.fb_category.service.PizzaService;
+import cybersoft.java11.group8.pizza_store.warehouse.validation.annotation.ExistRawMaterialName;
 
 @RestController
 @RequestMapping("/api/pizza")
@@ -33,6 +35,9 @@ import cybersoft.java11.group8.pizza_store.fb_category.service.PizzaService;
 public class PizzaController {
 	@Autowired 
 	PizzaService _pizzaService;
+	
+	@Autowired
+	 PizzaRepository _pizzaRepository;
 	
 	@GetMapping("")
 	public ResponseEntity<Object> findAllPizza(){
@@ -42,10 +47,8 @@ public class PizzaController {
 		}
 		return ResponseHandler.getResponse(pizzas, HttpStatus.OK);
 	}
-	@GetMapping("{pizza-id}")
-	public ResponseEntity<Object> findPizzaById(@Valid @PathVariable("pizza-id") Long pizzaId, BindingResult errors){
-		if (errors.hasErrors())
-			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
+	@GetMapping("/{pizza-id}")
+	public ResponseEntity<Object> findPizzaById( @PathVariable("pizza-id") Long pizzaId){
 		
 		Optional<Pizza> pizza = _pizzaService.findById(pizzaId);
 		if (pizza.isEmpty()) {
@@ -56,7 +59,8 @@ public class PizzaController {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<Object> savePizza(@Valid @RequestBody CreatePizzaDTO dto, BindingResult errors){
+	public ResponseEntity<Object> savePizza(@Valid @RequestBody CreatePizzaDTO dto, 
+			BindingResult errors){
 		if (errors.hasErrors()) {
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		}
@@ -66,20 +70,22 @@ public class PizzaController {
 	}
 	
 	@PutMapping("/{pizza-id}")
-	public ResponseEntity<Object> updateBeverage(@Valid CreatePizzaDTO dto, @Valid @NotNull @PathVariable ("pizza-id") Long pizzaId, BindingResult errors){
+	public ResponseEntity<Object> updatePizza(@Valid @RequestBody CreatePizzaDTO dto,
+			@PathVariable ("pizza-id") Long pizzaId, 
+			BindingResult errors){
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		
 		if (!_pizzaService.existPizza(pizzaId))
 			return ResponseHandler.getResponse("there is no Pizza id: " + pizzaId, HttpStatus.BAD_REQUEST);
 		
-		Pizza updatePizza  = new Pizza();
-		updatePizza = _pizzaService.save(dto);
+		Pizza updatePizza  = _pizzaRepository.getOne(pizzaId);
+		updatePizza = _pizzaService.update(dto, pizzaId);
 		return ResponseHandler.getResponse(updatePizza, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{pizza-id}/raw_material")
-	public ResponseEntity<Object> addRawMaterialToBeverage(@Valid String rawMaterialName, @Valid @NotNull @PathVariable ("pizza-id") Long pizzaId, BindingResult errors){
+	public ResponseEntity<Object> addRawMaterialToPizza(@Valid @ExistRawMaterialName @RequestBody String rawMaterialName, @PathVariable ("pizza-id") Long pizzaId, BindingResult errors){
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		
@@ -93,10 +99,7 @@ public class PizzaController {
 	
 	
 	@DeleteMapping("/{pizza-id}")
-	public ResponseEntity<Object> deleteBeverage(@Valid @NotNull @PathVariable ("pizza-id") Long pizzaId, BindingResult errors){
-		
-		if (errors.hasErrors())
-			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
+	public ResponseEntity<Object> deletePizza( @PathVariable ("pizza-id") Long pizzaId){
 		
 		if (!_pizzaService.existPizza(pizzaId))
 			return ResponseHandler.getResponse("there is no pizza id: " + pizzaId, HttpStatus.BAD_REQUEST);
@@ -106,10 +109,7 @@ public class PizzaController {
 	}
 	
 	@DeleteMapping("/{pizza-id}/raw_material")
-	public ResponseEntity<Object> deleteRawMaterialInBeverage(@RequestBody String RawMaterialName ,@Valid @NotNull @PathVariable ("pizza-id") Long pizzaId, BindingResult errors){
-		
-		if (errors.hasErrors())
-			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
+	public ResponseEntity<Object> deleteRawMaterialInPizza( @RequestBody String RawMaterialName ,@PathVariable ("pizza-id") Long pizzaId){
 		
 		if (!_pizzaService.existPizza(pizzaId))
 			return ResponseHandler.getResponse("there is no pizza id: " + pizzaId, HttpStatus.BAD_REQUEST);

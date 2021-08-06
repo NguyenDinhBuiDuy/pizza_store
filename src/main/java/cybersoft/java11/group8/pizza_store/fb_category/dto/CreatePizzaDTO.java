@@ -8,7 +8,11 @@ import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.Uni
 import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.UniqueBeverageName;
 import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.UniquePizzaCode;
 import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.UniquePizzaName;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class CreatePizzaDTO {
 
 	@UniquePizzaCode

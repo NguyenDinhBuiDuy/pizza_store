@@ -23,7 +23,6 @@ import lombok.Setter;
 @Table (name = "pizza_store_pizza")
 public class Pizza extends FBCategory {
 	
-	@NotNull(message = "{pizza.dough.notnull}")
 	private PizzaDough dough;
 
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})

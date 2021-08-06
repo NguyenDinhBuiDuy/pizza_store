@@ -26,6 +26,7 @@ import cybersoft.java11.group8.pizza_store.fb_category.service.BeverageService;
 import cybersoft.java11.group8.pizza_store.user.dto.CreateUserDTO;
 import cybersoft.java11.group8.pizza_store.user.model.User;
 import cybersoft.java11.group8.pizza_store.warehouse.model.RawMaterial;
+import cybersoft.java11.group8.pizza_store.warehouse.validation.annotation.ExistRawMaterialName;
 
 @RestController
 @RequestMapping("/api/beverage")
@@ -42,10 +43,8 @@ public class BeverageCategoryController {
 		}
 		return ResponseHandler.getResponse(beverages, HttpStatus.OK);
 	}
-	@GetMapping("{beverage-id}")
-	public ResponseEntity<Object> findBeverageById(@Valid @PathVariable("beverage-id") Long beverageId, BindingResult errors){
-		if (errors.hasErrors())
-			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
+	@GetMapping("/{beverage-id}")
+	public ResponseEntity<Object> findBeverageById(@Valid @PathVariable("beverage-id") Long beverageId){
 		
 		Optional<Beverage> beverages = _beverageService.findById(beverageId);
 		if (beverages.isEmpty()) {
@@ -66,7 +65,7 @@ public class BeverageCategoryController {
 	}
 	
 	@PutMapping("/{beverage-id}")
-	public ResponseEntity<Object> updateBeverage(@Valid CreateBeverageDTO dto, @Valid @NotNull @PathVariable ("beverage-id") Long beverageId, BindingResult errors){
+	public ResponseEntity<Object> updateBeverage(@Valid CreateBeverageDTO dto, @PathVariable ("beverage-id") Long beverageId, BindingResult errors){
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		
@@ -74,12 +73,12 @@ public class BeverageCategoryController {
 			return ResponseHandler.getResponse("there is no beverage id: " + beverageId, HttpStatus.BAD_REQUEST);
 		
 		Beverage updateBeverage  = new Beverage();
-		updateBeverage = _beverageService.save(dto);
+		updateBeverage = _beverageService.update(dto, beverageId);
 		return ResponseHandler.getResponse(updateBeverage, HttpStatus.CREATED);
 	}
 	
 	@PutMapping("/{beverage-id}/raw_material")
-	public ResponseEntity<Object> addRawMaterialToBeverage(@Valid String rawMaterialName, @Valid @NotNull @PathVariable ("beverage-id") Long beverageId, BindingResult errors){
+	public ResponseEntity<Object> addRawMaterialToBeverage(@Valid @ExistRawMaterialName @RequestBody  String rawMaterialName, @PathVariable ("beverage-id") Long beverageId, BindingResult errors){
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		
@@ -93,10 +92,7 @@ public class BeverageCategoryController {
 	
 	
 	@DeleteMapping("/{beverage-id}")
-	public ResponseEntity<Object> deleteBeverage(@Valid @NotNull @PathVariable ("beverage-id") Long beverageId, BindingResult errors){
-		
-		if (errors.hasErrors())
-			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
+	public ResponseEntity<Object> deleteBeverage( @PathVariable ("beverage-id") Long beverageId){
 		
 		if (!_beverageService.existBeverage(beverageId))
 			return ResponseHandler.getResponse("there is no beverage id: " + beverageId, HttpStatus.BAD_REQUEST);
@@ -106,7 +102,7 @@ public class BeverageCategoryController {
 	}
 	
 	@DeleteMapping("/{beverage-id}/raw_material")
-	public ResponseEntity<Object> deleteRawMaterialInBeverage(@RequestBody String RawMaterialName ,@Valid @NotNull @PathVariable ("beverage-id") Long beverageId, BindingResult errors){
+	public ResponseEntity<Object> deleteRawMaterialInBeverage(@RequestBody String RawMaterialName , @PathVariable ("beverage-id") Long beverageId, BindingResult errors){
 		
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);

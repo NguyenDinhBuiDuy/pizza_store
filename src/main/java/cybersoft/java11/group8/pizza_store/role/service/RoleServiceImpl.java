@@ -74,4 +74,11 @@ public class RoleServiceImpl implements RoleService {
 		return _roleRepository.existsById(roleId);
 	}
 
+	@Override
+	public Role updateRole(CreateRoleDTO dto, Long roleId) {
+		Role role = _roleRepository.getOne(roleId);
+		Role Update = (Role) mapper.map(dto, role);
+
+		return _roleRepository.save(role);
+	}
 }

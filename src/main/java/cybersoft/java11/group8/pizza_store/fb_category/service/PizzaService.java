@@ -17,4 +17,6 @@ public interface PizzaService extends GenericService<Pizza, Long> {
 
 	boolean removeRawMeterialInPizza(String rawMaterialName, @Valid @NotNull Long pizzaId);
 
+	Pizza update(@Valid CreatePizzaDTO dto, Long pizzaId);
+
 }

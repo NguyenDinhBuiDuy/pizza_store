@@ -17,4 +17,6 @@ public interface BeverageService extends GenericService<Beverage, Long>{
 
 	boolean removeRawMeterialInBeverage(String rawMaterialName, @Valid @NotNull Long beverageId);
 
+	Beverage update(@Valid CreateBeverageDTO dto, Long beverageId);
+
 }

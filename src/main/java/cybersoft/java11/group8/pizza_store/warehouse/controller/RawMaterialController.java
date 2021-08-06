@@ -1,6 +1,10 @@
 package cybersoft.java11.group8.pizza_store.warehouse.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,40 +29,51 @@ import cybersoft.java11.group8.pizza_store.warehouse.service.RawMaterialService;
 public class RawMaterialController {
 	@Autowired
 	private RawMaterialService service;
-	
+
 	@PostMapping("")
-	public ResponseEntity<Object> save(@Valid @RequestBody CreateRawMaterialDto dto, BindingResult errors){
-		if(errors.hasErrors())
+	public ResponseEntity<Object> save(@Valid @RequestBody CreateRawMaterialDto dto, BindingResult errors) {
+		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		RawMaterial newRawMaterial = service.save(dto);
 		return ResponseHandler.getResponse(newRawMaterial, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/{raw-material-name}")
-	public ResponseEntity<Object> findRawMaterialByName(@PathVariable("raw-material-name") String name){
-		RawMaterial rawMaterial = service.findRawMaterialByName(name);
-		if(rawMaterial == null)
+	public ResponseEntity<Object> findRawMaterialByName(@Valid @NotBlank @PathVariable("raw-material-name") String name,
+			BindingResult errors) {
+		if (errors.hasErrors())
+			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
+
+		Optional<RawMaterial> rawMaterial = service.findRawMaterialByName(name);
+		if (rawMaterial.isEmpty())
 			return ResponseHandler.getResponse("There is no data.", HttpStatus.OK);
+
 		return ResponseHandler.getResponse(rawMaterial, HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/{raw-material-id}")
 	public ResponseEntity<Object> updateRawMaterialInfo(@Valid @RequestBody CreateRawMaterialDto dto,
-													@PathVariable ("raw-material-id") Long rawMaterialId,
-													BindingResult errors){
-		if(rawMaterialId == null)
+			@PathVariable("raw-material-id") Long rawMaterialId, BindingResult errors) {
+		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
-		if(errors.hasErrors())
-			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
+
+		boolean isExistRawMaterialId = service.ExistRawMaterialId(rawMaterialId);
+		if (!isExistRawMaterialId)
+			return ResponseHandler.getResponse("there is not raw material id: " + rawMaterialId,
+					HttpStatus.BAD_REQUEST);
+
 		RawMaterial updateRawMaterial = service.updateRawMaterialInfo(dto, rawMaterialId);
 		return ResponseHandler.getResponse(updateRawMaterial, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/{raw-material-id}")
-	public ResponseEntity<Object> deleteRawMaterial(@PathVariable("raw-material-id") Long rawMaterialId){
-		if(rawMaterialId == null)
-			return ResponseHandler.getResponse("Raw Material must be provided.", HttpStatus.BAD_REQUEST);
+	public ResponseEntity<Object> deleteRawMaterial(@PathVariable("raw-material-id") Long rawMaterialId) {
+		boolean isExistRawMaterialId = service.ExistRawMaterialId(rawMaterialId);
+		if (!isExistRawMaterialId)
+			return ResponseHandler.getResponse("there is not raw material id: " + rawMaterialId,
+					HttpStatus.BAD_REQUEST);
+
 		service.deleteById(rawMaterialId);
-		return ResponseHandler.getResponse(HttpStatus.OK);
+		return ResponseHandler.getResponse("delete successfull",HttpStatus.OK);
 	}
 }

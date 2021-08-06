@@ -170,6 +170,13 @@ public class RoleGroupServiceImpl implements RoleGroupService {
 		
 		return _roleGroupRepository.existsById(groupId);
 	}
+	
+	@Override
+	public RoleGroup updateRoleGroup(@Valid CreateRoleGroupDTO dto, Long groupId) {
+		RoleGroup group = _roleGroupRepository.getOne(groupId);
+		group = (RoleGroup) mapper.map(dto, group);
+		return _roleGroupRepository.save(group);
+	}
 
 
 }

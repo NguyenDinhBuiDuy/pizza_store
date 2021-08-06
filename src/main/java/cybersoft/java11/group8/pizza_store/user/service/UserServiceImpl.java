@@ -12,14 +12,16 @@ import cybersoft.java11.group8.pizza_store.user.dto.CreateUserDTO;
 import cybersoft.java11.group8.pizza_store.user.model.User;
 import cybersoft.java11.group8.pizza_store.user.repository.UserRepository;
 import cybersoft.java11.group8.pizza_store.util.MapDTOToModel;
+import lombok.AllArgsConstructor;
 
 @Service
+@AllArgsConstructor
 public class UserServiceImpl extends GenericServiceImpl<User, Long> implements UserService {
-	@Autowired
-	UserRepository _repository;
+
+	private UserRepository _repository;
 	
-	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
 	private MapDTOToModel mapper;
 
 	@Override

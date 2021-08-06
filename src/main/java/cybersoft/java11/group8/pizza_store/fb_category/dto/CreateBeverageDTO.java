@@ -10,7 +10,11 @@ import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.DrinkType;
 import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.SugarPercent;
 import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.UniqueBeverageCode;
 import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.UniqueBeverageName;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class CreateBeverageDTO {
 	
 	@UniqueBeverageCode

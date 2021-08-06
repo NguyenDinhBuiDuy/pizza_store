@@ -15,7 +15,7 @@ import cybersoft.java11.group8.pizza_store.fb_category.validation.validator.Uniq
 @Target ({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniquePizzaName {
-	public String message() default "beverage name is already used";
+	public String message() default "pizza name is already used";
 
 	public Class<?>[] groups() default {};
 
