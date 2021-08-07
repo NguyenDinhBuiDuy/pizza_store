@@ -19,4 +19,6 @@ public interface PizzaService extends GenericService<Pizza, Long> {
 
 	Pizza update(@Valid CreatePizzaDTO dto, Long pizzaId);
 
+	Pizza addTopping(@Valid String toppingName, Long pizzaId);
+
 }

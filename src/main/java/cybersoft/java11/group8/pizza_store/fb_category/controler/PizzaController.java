@@ -79,7 +79,7 @@ public class PizzaController {
 		if (!_pizzaService.existPizza(pizzaId))
 			return ResponseHandler.getResponse("there is no Pizza id: " + pizzaId, HttpStatus.BAD_REQUEST);
 		
-		Pizza updatePizza  = _pizzaRepository.getOne(pizzaId);
+		Pizza updatePizza  = new Pizza();
 		updatePizza = _pizzaService.update(dto, pizzaId);
 		return ResponseHandler.getResponse(updatePizza, HttpStatus.CREATED);
 	}
@@ -94,6 +94,19 @@ public class PizzaController {
 		
 		Pizza updatePizza  = new Pizza();
 		updatePizza = _pizzaService.addRawMaterial(rawMaterialName,pizzaId);
+		return ResponseHandler.getResponse(updatePizza, HttpStatus.CREATED);
+	}
+	
+	@PutMapping("/{pizza-id}/topping")
+	public ResponseEntity<Object> addToppingToPizza(@Valid @RequestBody String toppingName, @PathVariable ("pizza-id") Long pizzaId, BindingResult errors){
+		if (errors.hasErrors())
+			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
+		
+		if (!_pizzaService.existPizza(pizzaId))
+			return ResponseHandler.getResponse("there is no pizza id: " + pizzaId, HttpStatus.BAD_REQUEST);
+		
+		Pizza updatePizza  = new Pizza();
+		updatePizza = _pizzaService.addTopping(toppingName,pizzaId);
 		return ResponseHandler.getResponse(updatePizza, HttpStatus.CREATED);
 	}
 	

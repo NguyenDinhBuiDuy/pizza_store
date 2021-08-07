@@ -1,10 +1,13 @@
 package cybersoft.java11.group8.pizza_store.fb_category.service;
 
+import java.util.Optional;
 import java.util.Set;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +19,9 @@ import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.Beverage;
 import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.DrinkType;
 import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.SugarPercent;
 import cybersoft.java11.group8.pizza_store.fb_category.model.pizza.Pizza;
+import cybersoft.java11.group8.pizza_store.fb_category.model.pizza.PizzaTopping;
 import cybersoft.java11.group8.pizza_store.fb_category.repository.PizzaRepository;
+import cybersoft.java11.group8.pizza_store.fb_category.repository.ToppingRepository;
 import cybersoft.java11.group8.pizza_store.util.MapDTOToModel;
 import cybersoft.java11.group8.pizza_store.warehouse.model.RawMaterial;
 import cybersoft.java11.group8.pizza_store.warehouse.repository.RawMaterialRepository;
@@ -28,7 +33,11 @@ public class PizzaServiceImpl extends GenericServiceImpl<Pizza, Long> implements
 
 	private PizzaRepository _pizzaRepository;
 	private RawMaterialRepository _rawMaterialRepository;
+	private ToppingRepository _toppingRepository;
 	private MapDTOToModel mapper;
+	
+	private static final Logger log = LoggerFactory.getLogger(PizzaServiceImpl.class);
+
 	
 	@Override
 	public Pizza save( CreatePizzaDTO dto) {
@@ -77,5 +86,16 @@ public class PizzaServiceImpl extends GenericServiceImpl<Pizza, Long> implements
 		Pizza model = _pizzaRepository.getOne(pizzaId);
 		model = (Pizza) mapper.map(dto, model);
 		return _pizzaRepository.save(model);
+	}
+
+	@Override
+	public Pizza addTopping(@Valid String toppingName, Long pizzaId) {
+		Pizza pizza = _pizzaRepository.getOne(pizzaId);
+		
+		Optional<PizzaTopping> topping = _toppingRepository.findPizzaToppingByName(toppingName);
+		if( topping.isEmpty())
+		log.error("Null roi ong oi");
+		
+		return pizza.addTopping(topping.get());
 	}
 }

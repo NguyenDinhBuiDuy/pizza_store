@@ -18,7 +18,7 @@ import lombok.Setter;
 @Table(name = "pizza_store_pizza_topping")
 public class PizzaTopping  extends AbstractEntity{
 
-	String sauceName;
+	String name;
 
 	@ManyToMany(mappedBy = "toppings", cascade = { CascadeType.MERGE, CascadeType.PERSIST })
 	List<Pizza> pizzas = new LinkedList<Pizza>();

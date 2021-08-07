@@ -20,7 +20,7 @@ import lombok.Setter;
 @Table (name = "pizza_store_pizza_sauce")
 public class PizzaSauce extends AbstractEntity {
 
-	String sauceName;
+	String name;
 	
 	@ManyToMany(mappedBy = "sauces", 
 			cascade = {CascadeType.MERGE, CascadeType.PERSIST})

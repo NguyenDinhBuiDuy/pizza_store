@@ -25,22 +25,16 @@ import lombok.Setter;
 @Setter
 public abstract class FBCategory extends AbstractEntity{
 	
-	@NotBlank (message = "{fbcategory.code.notblank}")
 	@Column (unique = true)
 	protected String code;
 	
-	@NotBlank (message = "{fbcategory.name.notblank}")
 	@Column (unique = true)
 	protected String name;
 	
-	@NotNull (message = "{fbcategory.price.notnull}")
-	@Positive (message = "{fbcategory.price.positive}")
 	protected Long price;
 	
-	@NotNull (message = "{fbcategory.type.notnull}")
 	protected FB_Type type;
 	
-	@NotNull
 	protected FB_Status status;
 	
 	protected String description;

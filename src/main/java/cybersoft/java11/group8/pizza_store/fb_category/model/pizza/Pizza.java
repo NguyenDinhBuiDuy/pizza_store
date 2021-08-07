@@ -48,6 +48,12 @@ public class Pizza extends FBCategory {
 		 rawMaterial.getPizzas().add(this);
 		 return this;
 	}
+
+	public Pizza addTopping(PizzaTopping topping) {
+		this.toppings.add(topping);
+		topping.getPizzas().add(this);
+		return this;
+	}
 	
 	
 
