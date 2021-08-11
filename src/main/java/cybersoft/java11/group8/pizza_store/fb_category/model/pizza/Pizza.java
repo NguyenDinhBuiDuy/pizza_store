@@ -2,6 +2,7 @@ package cybersoft.java11.group8.pizza_store.fb_category.model.pizza;
 
 import java.util.EnumSet;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import cybersoft.java11.group8.pizza_store.fb_category.model.FBCategory;
 import cybersoft.java11.group8.pizza_store.warehouse.model.RawMaterial;
@@ -23,12 +29,17 @@ import lombok.Setter;
 @Table (name = "pizza_store_pizza")
 public class Pizza extends FBCategory {
 	
+	
+	private static final Logger log = LoggerFactory.getLogger(Pizza.class);
+
+	
 	private PizzaDough dough;
 
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
 	@JoinTable (name = "pizza_topping_links", 
 	joinColumns = @JoinColumn(name = "pizza_id"),
 	inverseJoinColumns = @JoinColumn(name = "topping_id"))
+	@JsonIgnore
 	private Set<PizzaTopping> toppings = new HashSet<PizzaTopping>();
 	
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
@@ -46,13 +57,35 @@ public class Pizza extends FBCategory {
 	public Pizza addRawMaterial(RawMaterial rawMaterial) {
 		 this.recipes.add(rawMaterial);
 		 rawMaterial.getPizzas().add(this);
+
 		 return this;
 	}
 
 	public Pizza addTopping(PizzaTopping topping) {
 		this.toppings.add(topping);
 		topping.getPizzas().add(this);
+		log.error(this.name);
+		
 		return this;
+	}
+
+	public boolean removeRawMaterial(RawMaterial rawMaterial) {
+		
+		boolean result = this.recipes.remove(rawMaterial);
+		if (result)
+			rawMaterial.getPizzas().remove(this);
+		
+		return result;	
+	}
+
+	public boolean removeTopping(PizzaTopping pizzaTopping) {
+		
+		boolean result = this.toppings.remove(pizzaTopping);
+		if (result)
+			pizzaTopping.getPizzas().remove(this);
+		
+		return result;
+		
 	}
 	
 	

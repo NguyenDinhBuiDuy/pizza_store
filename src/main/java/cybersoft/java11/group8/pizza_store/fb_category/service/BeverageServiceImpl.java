@@ -59,25 +59,24 @@ public class BeverageServiceImpl extends GenericServiceImpl<Beverage, Long> impl
 
 		RawMaterial rawMaterial = _rawMaterialRepository.findByName(rawMaterialName).get();
 
-		return beverage.addRawMaterial(rawMaterial);
+		beverage.addRawMaterial(rawMaterial);
+		
+		return _beverageRepository.save(beverage);
 	}
 
 	@Override
 	public boolean removeRawMeterialInBeverage(String rawMaterialName, @Valid @NotNull Long beverageId) {
 		Beverage beverage = _beverageRepository.getOne(beverageId);
 		
-		Set<RawMaterial> recepies = beverage.getRecipes();
+		Optional<RawMaterial> rawMaterial = _rawMaterialRepository.findByName(rawMaterialName);
 		
-		for (RawMaterial rawMaterial : recepies) {
-			 if (rawMaterial.getName().equals(rawMaterialName)) {
-				 recepies.remove(rawMaterial);
-				 beverage.setRecipes(recepies);
-				 
-				 return true;
-			 }
+		boolean result = beverage.removeRawMaterial(rawMaterial.get());
+		
+		if (rawMaterial.isPresent() && result) {
+			_beverageRepository.save(beverage);
+			return true;
 		}
 		return false;
-
 	}
 
 	@Override

@@ -29,23 +29,22 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class PizzaServiceImpl extends GenericServiceImpl<Pizza, Long> implements PizzaService{
+public class PizzaServiceImpl extends GenericServiceImpl<Pizza, Long> implements PizzaService {
 
 	private PizzaRepository _pizzaRepository;
 	private RawMaterialRepository _rawMaterialRepository;
 	private ToppingRepository _toppingRepository;
 	private MapDTOToModel mapper;
-	
+
 	private static final Logger log = LoggerFactory.getLogger(PizzaServiceImpl.class);
 
-	
 	@Override
-	public Pizza save( CreatePizzaDTO dto) {
+	public Pizza save(CreatePizzaDTO dto) {
 		Pizza model = new Pizza();
 		model = (Pizza) mapper.map(dto, model);
 		model.setStatus(FB_Status.IN_STOCK);
 		model.setType(FB_Type.FOOD);
-		
+
 		return _pizzaRepository.save(model);
 	}
 
@@ -58,44 +57,59 @@ public class PizzaServiceImpl extends GenericServiceImpl<Pizza, Long> implements
 	public Pizza addRawMaterial(@Valid String rawMaterialName, Long pizzaId) {
 		Pizza pizza = _pizzaRepository.getOne(pizzaId);
 
-		RawMaterial rawMaterial = _rawMaterialRepository.findByName(rawMaterialName).get();
+		Optional<RawMaterial> rawMaterial = _rawMaterialRepository.findByName(rawMaterialName);
 
-		return pizza.addRawMaterial(rawMaterial);
+		pizza.addRawMaterial(rawMaterial.get());
+		return _pizzaRepository.save(pizza);
 	}
 
 	@Override
 	public boolean removeRawMeterialInPizza(String rawMaterialName, @Valid @NotNull Long pizzaId) {
-	Pizza pizza = _pizzaRepository.getOne(pizzaId);
-		
-		Set<RawMaterial> recepies = pizza.getRecipes();
-		
-		for (RawMaterial rawMaterial : recepies) {
-			 if (rawMaterial.getName().equals(rawMaterialName)) {
-				 recepies.remove(rawMaterial);
-				 pizza.setRecipes(recepies);
-				 
-				 return true;
-			 }
-		}
-		return false;
+		Pizza pizza = _pizzaRepository.getOne(pizzaId);
 
+		Optional<RawMaterial> rawMaterial = _rawMaterialRepository.findByName(rawMaterialName);
+		
+		boolean result = pizza.removeRawMaterial(rawMaterial.get());
+		if (rawMaterial.isPresent() && result) {
+			_pizzaRepository.save(pizza);
+			return true;
+		}
+
+		return false;
 	}
 
 	@Override
-	public Pizza update( CreatePizzaDTO dto, Long pizzaId) {
+	public Pizza update(CreatePizzaDTO dto, Long pizzaId) {
 		Pizza model = _pizzaRepository.getOne(pizzaId);
 		model = (Pizza) mapper.map(dto, model);
+
 		return _pizzaRepository.save(model);
 	}
 
 	@Override
 	public Pizza addTopping(@Valid String toppingName, Long pizzaId) {
 		Pizza pizza = _pizzaRepository.getOne(pizzaId);
-		
+
 		Optional<PizzaTopping> topping = _toppingRepository.findPizzaToppingByName(toppingName);
-		if( topping.isEmpty())
-		log.error("Null roi ong oi");
-		
-		return pizza.addTopping(topping.get());
+
+		pizza.addTopping(topping.get());
+
+		return _pizzaRepository.save(pizza);
+	}
+
+	@Override
+	public boolean removeToppingPizza(String toppingName, Long pizzaId) {
+		Pizza pizza = _pizzaRepository.getOne(pizzaId);
+
+		Optional<PizzaTopping> topping = _toppingRepository.findByName(toppingName);
+
+		boolean result = pizza.removeTopping(topping.get());
+		if (topping.isPresent() && result) {
+			_pizzaRepository.save(pizza);
+			return true;
+		}
+
+		return false;
+
 	}
 }

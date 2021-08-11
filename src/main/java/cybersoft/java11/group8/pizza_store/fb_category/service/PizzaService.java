@@ -21,4 +21,6 @@ public interface PizzaService extends GenericService<Pizza, Long> {
 
 	Pizza addTopping(@Valid String toppingName, Long pizzaId);
 
+	boolean removeToppingPizza(String toppingName, Long pizzaId);
+
 }

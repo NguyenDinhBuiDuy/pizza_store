@@ -122,17 +122,33 @@ public class PizzaController {
 	}
 	
 	@DeleteMapping("/{pizza-id}/raw_material")
-	public ResponseEntity<Object> deleteRawMaterialInPizza( @RequestBody String RawMaterialName ,@PathVariable ("pizza-id") Long pizzaId){
+	public ResponseEntity<Object> deleteRawMaterialInPizza( @RequestBody String rawMaterialName ,@PathVariable ("pizza-id") Long pizzaId){
 		
 		if (!_pizzaService.existPizza(pizzaId))
 			return ResponseHandler.getResponse("there is no pizza id: " + pizzaId, HttpStatus.BAD_REQUEST);
 		
-		boolean result = _pizzaService.removeRawMeterialInPizza(RawMaterialName, pizzaId);
+		boolean result = _pizzaService.removeRawMeterialInPizza(rawMaterialName, pizzaId);
 		
 		if (!result) 
-			return ResponseHandler.getResponse("there is no RawMaterial: " + RawMaterialName, HttpStatus.BAD_REQUEST);
+			return ResponseHandler.getResponse("there is no RawMaterial: " + rawMaterialName, HttpStatus.BAD_REQUEST);
 	
-		return ResponseHandler.getResponse("remove raw material: " + RawMaterialName + "successfull", HttpStatus.OK);
+		return ResponseHandler.getResponse("remove raw material: " + rawMaterialName + "successfull", HttpStatus.OK);
 	}
+	
+	@DeleteMapping("/{pizza-id}/topping")
+	public ResponseEntity<Object> deleteToppingInPizza( @RequestBody String toppingName ,@PathVariable ("pizza-id") Long pizzaId){
+		
+		if (!_pizzaService.existPizza(pizzaId))
+			return ResponseHandler.getResponse("there is no pizza id: " + pizzaId, HttpStatus.BAD_REQUEST);
+		
+		boolean result = _pizzaService.removeToppingPizza(toppingName, pizzaId);
+		
+		if (!result) 
+			return ResponseHandler.getResponse("there is no topping : " + toppingName, HttpStatus.BAD_REQUEST);
+		
+		return ResponseHandler.getResponse("remove topping " + toppingName + "successfull", HttpStatus.OK);
+	}
+	
+	
 	
 }

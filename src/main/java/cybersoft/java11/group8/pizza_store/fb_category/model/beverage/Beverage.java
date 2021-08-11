@@ -41,10 +41,14 @@ public class Beverage extends FBCategory {
 		
 	}
 
-	public Beverage removeRawMaterial(RawMaterial rawMaterial) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean removeRawMaterial(RawMaterial rawMaterial) {
+		
+		boolean result = this.recipes.remove(rawMaterial);
+		rawMaterial.getBeverages().remove(this);
+		
+		return result;
 	}
+
 	
 
 }
