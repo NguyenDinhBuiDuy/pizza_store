@@ -1,4 +1,4 @@
-package cybersoft.java11.group8.pizza_store.fb_category.model;
+package cybersoft.java11.group8.pizza_store.fb_category.model.beverage;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -11,9 +11,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
-import cybersoft.java11.group8.pizza_store.fb_category.util.FBCategory;
-import cybersoft.java11.group8.pizza_store.fb_category.util.beverage.DrinkType;
-import cybersoft.java11.group8.pizza_store.fb_category.util.beverage.SugarPercent;
+import cybersoft.java11.group8.pizza_store.fb_category.model.FBCategory;
 import cybersoft.java11.group8.pizza_store.warehouse.model.RawMaterial;
 import lombok.Getter;
 import lombok.Setter;
@@ -35,6 +33,22 @@ public class Beverage extends FBCategory {
 	joinColumns = @JoinColumn (name = "Beverage_id"),
 	inverseJoinColumns = @JoinColumn(name = "recipes_id"))
 	private Set<RawMaterial> recipes = new HashSet<RawMaterial>();
+
+	public Beverage addRawMaterial (RawMaterial rawMaterial) {
+		this.recipes.add(rawMaterial);
+		rawMaterial.getBeverages().add(this);
+		return this;
+		
+	}
+
+	public boolean removeRawMaterial(RawMaterial rawMaterial) {
+		
+		boolean result = this.recipes.remove(rawMaterial);
+		rawMaterial.getBeverages().remove(this);
+		
+		return result;
+	}
+
 	
 
 }

@@ -1,4 +1,4 @@
-package cybersoft.java11.group8.pizza_store.fb_category.util.beverage;
+package cybersoft.java11.group8.pizza_store.fb_category.model.beverage;
 
 public enum SugarPercent {
   DRY("0%"),

@@ -16,7 +16,7 @@ import cybersoft.java11.group8.pizza_store.role.validation.validator.ExistUserNa
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExistUserNameAtUsers {
 	
-	public String message() default "user name is not existed at users";
+	public String message() default "user name does not exist at users";
 
 	public Class<?>[] groups() default {};
 

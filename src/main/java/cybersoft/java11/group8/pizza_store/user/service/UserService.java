@@ -14,8 +14,6 @@ public interface UserService extends GenericService<User, Long> {
 
 	boolean isTakenUsername(String username);
 
-	User update(@Valid CreateUserDTO dto, Long userId);
-
 	boolean existUser(@Valid @NotNull Long userId);
 
 }
