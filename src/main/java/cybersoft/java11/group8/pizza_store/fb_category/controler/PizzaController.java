@@ -27,6 +27,7 @@ import cybersoft.java11.group8.pizza_store.fb_category.model.pizza.Pizza;
 import cybersoft.java11.group8.pizza_store.fb_category.repository.PizzaRepository;
 import cybersoft.java11.group8.pizza_store.fb_category.service.BeverageService;
 import cybersoft.java11.group8.pizza_store.fb_category.service.PizzaService;
+import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.ExistToppingName;
 import cybersoft.java11.group8.pizza_store.warehouse.validation.annotation.ExistRawMaterialName;
 
 @RestController
@@ -98,7 +99,7 @@ public class PizzaController {
 	}
 	
 	@PutMapping("/{pizza-id}/topping")
-	public ResponseEntity<Object> addToppingToPizza(@Valid @RequestBody String toppingName, @PathVariable ("pizza-id") Long pizzaId, BindingResult errors){
+	public ResponseEntity<Object> addToppingToPizza(@Valid @ExistToppingName @RequestBody String toppingName, @PathVariable ("pizza-id") Long pizzaId, BindingResult errors){
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		
