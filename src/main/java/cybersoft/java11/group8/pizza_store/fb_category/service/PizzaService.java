@@ -1,5 +1,7 @@
 package cybersoft.java11.group8.pizza_store.fb_category.service;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -22,5 +24,7 @@ public interface PizzaService extends GenericService<Pizza, Long> {
 	Pizza addTopping(@Valid String toppingName, Long pizzaId);
 
 	boolean removeToppingPizza(String toppingName, Long pizzaId);
+
+	Optional<Pizza> findByCode(String code);
 
 }

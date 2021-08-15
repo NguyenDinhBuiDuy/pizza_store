@@ -112,4 +112,9 @@ public class PizzaServiceImpl extends GenericServiceImpl<Pizza, Long> implements
 		return false;
 
 	}
+
+	@Override
+	public Optional<Pizza> findByCode(String code) {
+		return _pizzaRepository.findByCode(code);
+	}
 }
