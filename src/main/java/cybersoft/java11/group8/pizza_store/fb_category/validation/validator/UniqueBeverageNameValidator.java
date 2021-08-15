@@ -27,7 +27,7 @@ public class UniqueBeverageNameValidator implements ConstraintValidator<UniqueBe
 	public boolean isValid(String name, ConstraintValidatorContext context) {
 		
 		Optional<Beverage> beverage = _BeverageRepository.findByName(name);
-		if (beverage.isPresent())
+		if (beverage.isEmpty())
 			return true;
 		
 		context.buildConstraintViolationWithTemplate(message).

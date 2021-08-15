@@ -70,7 +70,6 @@ public class Pizza extends FBCategory {
 	public Pizza addTopping(PizzaTopping topping) {
 		this.toppings.add(topping);
 		topping.getPizzas().add(this);
-		log.error(this.name);
 		
 		return this;
 	}

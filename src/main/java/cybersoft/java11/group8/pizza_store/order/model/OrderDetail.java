@@ -12,6 +12,7 @@ import cybersoft.java11.group8.pizza_store.common_data.model.AbstractEntity;
 import cybersoft.java11.group8.pizza_store.fb_category.model.FBCategory;
 import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.Beverage;
 import cybersoft.java11.group8.pizza_store.fb_category.model.pizza.Pizza;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +21,6 @@ import lombok.Setter;
 @Entity
 @Table (name = "pizza_store_order_detail")
 public class OrderDetail extends AbstractEntity{
-	
 	
 	@Positive
 	Integer quantity;
@@ -47,4 +47,4 @@ public class OrderDetail extends AbstractEntity{
 		return this;
 		
 	}
-}
+
