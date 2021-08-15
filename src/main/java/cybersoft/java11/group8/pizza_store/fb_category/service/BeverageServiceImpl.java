@@ -87,4 +87,9 @@ public class BeverageServiceImpl extends GenericServiceImpl<Beverage, Long> impl
 		return _beverageRepository.save(model);
 	}
 
+	@Override
+	public Optional<Beverage> findByCode(String code) {
+		return _beverageRepository.findByCode(code);
+	}
+
 }

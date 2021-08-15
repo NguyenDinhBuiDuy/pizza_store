@@ -1,5 +1,7 @@
 package cybersoft.java11.group8.pizza_store.fb_category.service;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
@@ -18,5 +20,7 @@ public interface BeverageService extends GenericService<Beverage, Long>{
 	boolean removeRawMeterialInBeverage(String rawMaterialName, @Valid @NotNull Long beverageId);
 
 	Beverage update(@Valid CreateBeverageDTO dto, Long beverageId);
+
+	Optional<Beverage> findByCode(String code);
 
 }
