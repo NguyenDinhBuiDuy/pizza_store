@@ -46,4 +46,9 @@ public class RawMaterialServiceImpl extends GenericServiceImpl<RawMaterial, Long
 			rawMaterial.setSupplier(supplierOpt.get());
 		return rawMaterialRepository.save(rawMaterial);
 	}
+
+	@Override
+	public Boolean existById(Long rawMaterialId) {
+		return rawMaterialRepository.existsById(rawMaterialId);
+	}
 }

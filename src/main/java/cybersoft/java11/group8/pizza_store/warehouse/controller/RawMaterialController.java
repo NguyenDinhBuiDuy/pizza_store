@@ -31,14 +31,16 @@ public class RawMaterialController {
 		if(errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		RawMaterial newRawMaterial = service.save(dto);
-		return ResponseHandler.getResponse(newRawMaterial, HttpStatus.OK);
+		return ResponseHandler.getResponse(newRawMaterial, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/{raw-material-name}")
 	public ResponseEntity<Object> findRawMaterialByName(@PathVariable("raw-material-name") String name){
+		if(name == null)
+			return ResponseHandler.getResponse("Please enter raw material name.", HttpStatus.OK);
 		RawMaterial rawMaterial = service.findRawMaterialByName(name);
 		if(rawMaterial == null)
-			return ResponseHandler.getResponse("There is no data.", HttpStatus.OK);
+			return ResponseHandler.getResponse("Raw material name not found.", HttpStatus.NOT_FOUND);
 		return ResponseHandler.getResponse(rawMaterial, HttpStatus.OK);
 	}
 	
@@ -47,7 +49,9 @@ public class RawMaterialController {
 													@PathVariable ("raw-material-id") Long rawMaterialId,
 													BindingResult errors){
 		if(rawMaterialId == null)
-			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
+			return ResponseHandler.getResponse("Please enter raw material id.", HttpStatus.BAD_REQUEST);
+		if(!service.existById(rawMaterialId))
+			return ResponseHandler.getResponse("Raw material id not found.", HttpStatus.NOT_FOUND);
 		if(errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		RawMaterial updateRawMaterial = service.updateRawMaterialInfo(dto, rawMaterialId);
@@ -57,8 +61,10 @@ public class RawMaterialController {
 	@DeleteMapping("/{raw-material-id}")
 	public ResponseEntity<Object> deleteRawMaterial(@PathVariable("raw-material-id") Long rawMaterialId){
 		if(rawMaterialId == null)
-			return ResponseHandler.getResponse("Raw Material must be provided.", HttpStatus.BAD_REQUEST);
+			return ResponseHandler.getResponse("Please enter raw material id.", HttpStatus.BAD_REQUEST);
+		if(!service.existById(rawMaterialId))
+			return ResponseHandler.getResponse("Raw material id does not exist.", HttpStatus.BAD_REQUEST);
 		service.deleteById(rawMaterialId);
-		return ResponseHandler.getResponse(HttpStatus.OK);
+		return ResponseHandler.getResponse("Remove the raw material successfully.", HttpStatus.OK);
 	}
 }

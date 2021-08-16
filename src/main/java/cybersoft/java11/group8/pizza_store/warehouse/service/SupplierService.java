@@ -11,4 +11,6 @@ public interface SupplierService extends GenericService<Supplier, Long> {
 	Supplier findSupplierByName(String name);
 
 	Supplier updateSupplierInfo(CreateSupplierDto dto, Long supplierId);
+	
+	Boolean existById(Long supplierId);
 }

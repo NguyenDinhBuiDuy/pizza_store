@@ -35,4 +35,9 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, Long> impl
 		supplier = mapper.map(dto, supplier);
 		return supplierRepository.save(supplier);
 	}
+
+	@Override
+	public Boolean existById(Long supplierId) {
+		return supplierRepository.existsById(supplierId);
+	}
 }

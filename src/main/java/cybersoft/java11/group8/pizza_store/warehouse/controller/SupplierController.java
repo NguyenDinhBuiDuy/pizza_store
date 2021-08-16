@@ -31,14 +31,16 @@ public class SupplierController {
 		if(errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		Supplier newSupplier = service.save(dto);
-		return ResponseHandler.getResponse(newSupplier, HttpStatus.OK);
+		return ResponseHandler.getResponse(newSupplier, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/{supplier-name}")
 	public ResponseEntity<Object> findSupplierByName(@PathVariable("supplier-name") String name){
+		if(name == null)
+			return ResponseHandler.getResponse("Please enter supplier name.", HttpStatus.BAD_REQUEST);
 		Supplier supplier = service.findSupplierByName(name);
 		if(supplier == null)
-			return ResponseHandler.getResponse("There is no data.", HttpStatus.OK);
+			return ResponseHandler.getResponse("Supplier name not found.", HttpStatus.NOT_FOUND);
 		return ResponseHandler.getResponse(supplier, HttpStatus.OK);
 	}
 	
@@ -47,7 +49,9 @@ public class SupplierController {
 													@PathVariable ("supplier-id") Long supplierId,
 													BindingResult errors){
 		if(supplierId == null)
-			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
+			return ResponseHandler.getResponse("Please enter supplier id.", HttpStatus.BAD_REQUEST);
+		if(!service.existById(supplierId))
+			return ResponseHandler.getResponse("Supplier id not found.", HttpStatus.NOT_FOUND);
 		if(errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		Supplier updateSupplier = service.updateSupplierInfo(dto, supplierId);
@@ -57,8 +61,10 @@ public class SupplierController {
 	@DeleteMapping("/{supplier-id}")
 	public ResponseEntity<Object> deleteSupplier(@PathVariable("supplier-id") Long supplierId){
 		if(supplierId == null)
-			return ResponseHandler.getResponse("Supplier must be provided.", HttpStatus.BAD_REQUEST);
+			return ResponseHandler.getResponse("Please enter supplier id.", HttpStatus.BAD_REQUEST);
+		if(!service.existById(supplierId))
+			return ResponseHandler.getResponse("Supplier id does not exist.", HttpStatus.BAD_REQUEST);
 		service.deleteById(supplierId);
-		return ResponseHandler.getResponse(HttpStatus.OK);
+		return ResponseHandler.getResponse("Remove the supplier successfully.", HttpStatus.OK);
 	}
 }
