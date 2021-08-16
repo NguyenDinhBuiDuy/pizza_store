@@ -8,17 +8,15 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import cybersoft.java11.group8.pizza_store.warehouse.validation.validator.UniqueRawmaterialValidator;
+import cybersoft.java11.group8.pizza_store.warehouse.validation.validator.UniqueRawMaterialValidator;
 
-@Constraint(validatedBy = UniqueRawmaterialValidator.class)
+@Constraint(validatedBy = UniqueRawMaterialValidator.class)
 @Target ({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface UniqueRawMaterialName {
-	public String message() default "raw material name is already used";
+	public String message() default "Raw material name is already used";
 
 	public Class<?>[] groups() default {};
 
 	public Class<? extends Payload>[] payload() default {};
-
-	
 }

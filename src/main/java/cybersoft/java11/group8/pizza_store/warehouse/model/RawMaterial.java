@@ -11,11 +11,14 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import cybersoft.java11.group8.pizza_store.common_data.model.AbstractEntity;
 import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.Beverage;
@@ -30,34 +33,37 @@ import lombok.Setter;
 @Entity
 @Table(name = "pizza_store_raw_material")
 public class RawMaterial extends AbstractEntity {
-	
+	@NotBlank(message = "{raw-material.name.not-blank}")
+	@Size(min = 2, message = "{raw-material.name.size}")
 	@Column(unique = true)
 	private String name;
 	
+	@NotBlank(message = "{raw-material.unit.not-blank}")
 	private String unit;
 	
+	@DecimalMin(value = "1", message = "{raw-material.quantity.min}")
 	private Integer quantity;
 	
-	private Long price;
+	@DecimalMin(value = "1000", message = "{raw-material.price.min}")
+	private Float price;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateUtils.DATE_FORMAT)
-	@DateTimeFormat (pattern = DateUtils.DATE_FORMAT)
+	@DateTimeFormat(pattern = DateUtils.DATE_FORMAT)
 	private LocalDateTime importDate;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateUtils.DATE_FORMAT)
-	@DateTimeFormat (pattern = DateUtils.DATE_FORMAT)
+	@DateTimeFormat(pattern = DateUtils.DATE_FORMAT)
 	private LocalDateTime expirationDate;
 	
-	private RawMaterialStatus status;
-
 	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Supplier supplier;
-
-	@ManyToMany(mappedBy = "recipes",
-			cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	
+	private RawMaterialStatus status;
+	
+	@ManyToMany(mappedBy = "recipes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Beverage> beverages = new HashSet<Beverage>();
 	
-	@ManyToMany(mappedBy = "recipes",
-			cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(mappedBy = "recipes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	private Set<Pizza> pizzas = new HashSet<Pizza>();
 }

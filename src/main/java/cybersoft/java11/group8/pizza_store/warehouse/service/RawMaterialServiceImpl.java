@@ -2,9 +2,6 @@ package cybersoft.java11.group8.pizza_store.warehouse.service;
 
 import java.util.Optional;
 
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +14,10 @@ import cybersoft.java11.group8.pizza_store.warehouse.repository.RawMaterialRepos
 import cybersoft.java11.group8.pizza_store.warehouse.repository.SupplierRepository;
 import lombok.AllArgsConstructor;
 
-@Service
 @AllArgsConstructor
+@Service
 public class RawMaterialServiceImpl extends GenericServiceImpl<RawMaterial, Long> implements RawMaterialService {
-
-	
+	@Autowired
 	private RawMaterialRepository rawMaterialRepository;
 	private SupplierRepository supplierRepository;
 	private MapDTOToModel<Object, RawMaterial> mapper;
@@ -52,7 +48,7 @@ public class RawMaterialServiceImpl extends GenericServiceImpl<RawMaterial, Long
 	}
 
 	@Override
-	public boolean ExistRawMaterialId(@Valid @NotNull Long rawMaterialId) {
+	public Boolean existById(Long rawMaterialId) {
 		return rawMaterialRepository.existsById(rawMaterialId);
 	}
 }

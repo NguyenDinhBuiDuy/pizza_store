@@ -12,9 +12,9 @@ import cybersoft.java11.group8.pizza_store.warehouse.repository.RawMaterialRepos
 import cybersoft.java11.group8.pizza_store.warehouse.validation.annotation.ExistRawMaterialName;
 
 public class ExistRawMaterialNameValidator implements ConstraintValidator<ExistRawMaterialName, String> {
-
+	
 	@Autowired
-	private RawMaterialRepository _rawMaterialRepository;
+	private RawMaterialRepository rawMaterialRepository;
 	
 	private String message;
 	
@@ -25,16 +25,12 @@ public class ExistRawMaterialNameValidator implements ConstraintValidator<ExistR
 	
 	@Override
 	public boolean isValid(String rawMaterialName, ConstraintValidatorContext context) {
-		
-		Optional<RawMaterial> rawMaterial = _rawMaterialRepository.findByName(rawMaterialName);
-		if (rawMaterial.isPresent())
+		Optional<RawMaterial> findRawMaterialByName = rawMaterialRepository.findByName(rawMaterialName);
+		if (findRawMaterialByName.isPresent())
 			return true;
-		
 		context.buildConstraintViolationWithTemplate(message).
 		addConstraintViolation().
 		disableDefaultConstraintViolation();
-		
 		return false;
 	}
-
 }
