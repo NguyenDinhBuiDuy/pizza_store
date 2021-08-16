@@ -1,19 +1,30 @@
 package cybersoft.java11.group8.pizza_store.warehouse.model;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import cybersoft.java11.group8.pizza_store.common_data.model.AbstractEntity;
+import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.Beverage;
+import cybersoft.java11.group8.pizza_store.fb_category.model.pizza.Pizza;
+import cybersoft.java11.group8.pizza_store.util.DateUtils;
+import cybersoft.java11.group8.pizza_store.warehouse.util.RawMaterialStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -36,12 +47,23 @@ public class RawMaterial extends AbstractEntity {
 	@DecimalMin(value = "1000", message = "{raw-material.price.min}")
 	private Float price;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateUtils.DATE_FORMAT)
+	@DateTimeFormat(pattern = DateUtils.DATE_FORMAT)
 	private LocalDateTime importDate;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateUtils.DATE_FORMAT)
+	@DateTimeFormat(pattern = DateUtils.DATE_FORMAT)
 	private LocalDateTime expirationDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JsonIgnore
 	private Supplier supplier;
 	
-	private String status;
+	private RawMaterialStatus status;
+	
+	@ManyToMany(mappedBy = "recipes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private Set<Beverage> beverages = new HashSet<Beverage>();
+	
+	@ManyToMany(mappedBy = "recipes", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	private Set<Pizza> pizzas = new HashSet<Pizza>();
 }

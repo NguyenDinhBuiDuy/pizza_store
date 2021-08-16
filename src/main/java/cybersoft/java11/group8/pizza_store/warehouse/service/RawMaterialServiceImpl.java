@@ -33,8 +33,8 @@ public class RawMaterialServiceImpl extends GenericServiceImpl<RawMaterial, Long
 	}
 
 	@Override
-	public RawMaterial findRawMaterialByName(String name) {
-		return rawMaterialRepository.findRawMaterialByName(name);
+	public Optional<RawMaterial> findRawMaterialByName(String name) {
+		return rawMaterialRepository.findByName(name);
 	}
 
 	@Override

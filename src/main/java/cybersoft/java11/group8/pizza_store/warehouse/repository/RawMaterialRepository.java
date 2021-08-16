@@ -12,5 +12,4 @@ public interface RawMaterialRepository extends JpaRepository<RawMaterial, Long> 
 
 	Optional<RawMaterial> findByName(String name);
 
-
 }

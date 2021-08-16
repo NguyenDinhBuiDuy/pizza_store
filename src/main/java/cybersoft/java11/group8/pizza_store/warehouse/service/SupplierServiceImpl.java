@@ -1,5 +1,7 @@
 package cybersoft.java11.group8.pizza_store.warehouse.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,8 +27,8 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, Long> impl
 	}
 
 	@Override
-	public Supplier findSupplierByName(String name) {
-		return supplierRepository.findSuplierByName(name);
+	public Optional<Supplier> findSupplierByName(String name) {
+		return supplierRepository.findByName(name);
 	}
 
 	@Override

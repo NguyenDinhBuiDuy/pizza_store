@@ -14,7 +14,7 @@ import cybersoft.java11.group8.pizza_store.warehouse.validation.validator.ExistR
 @Target ({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ExistRawMaterialName {
-	public String message() default " raw material name does not exist";
+	public String message() default " Raw material name does not exist";
 
 	public Class<?>[] groups() default {};
 

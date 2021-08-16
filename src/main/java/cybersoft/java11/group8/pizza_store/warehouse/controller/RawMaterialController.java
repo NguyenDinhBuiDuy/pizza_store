@@ -1,5 +1,7 @@
 package cybersoft.java11.group8.pizza_store.warehouse.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,9 +39,9 @@ public class RawMaterialController {
 	@GetMapping("/{raw-material-name}")
 	public ResponseEntity<Object> findRawMaterialByName(@PathVariable("raw-material-name") String name){
 		if(name == null)
-			return ResponseHandler.getResponse("Please enter raw material name.", HttpStatus.OK);
-		RawMaterial rawMaterial = service.findRawMaterialByName(name);
-		if(rawMaterial == null)
+			return ResponseHandler.getResponse("Please enter raw material name.", HttpStatus.BAD_REQUEST);
+		Optional<RawMaterial> rawMaterial = service.findRawMaterialByName(name);
+		if(rawMaterial.isEmpty())
 			return ResponseHandler.getResponse("Raw material name not found.", HttpStatus.NOT_FOUND);
 		return ResponseHandler.getResponse(rawMaterial, HttpStatus.OK);
 	}

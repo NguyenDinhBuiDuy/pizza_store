@@ -8,13 +8,13 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
-import cybersoft.java11.group8.pizza_store.warehouse.validation.validator.ExistRawMaterialValidator;
+import cybersoft.java11.group8.pizza_store.warehouse.validation.validator.UniqueSupplierValidator;
 
-@Constraint(validatedBy = ExistRawMaterialValidator.class)
-@Target(ElementType.FIELD)
+@Constraint(validatedBy = UniqueSupplierValidator.class)
+@Target ({ElementType.PARAMETER, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ExistRawMaterial {
-	public String message() default "Raw material is not exist";
+public @interface UniqueSupplierName {
+	public String message() default "Supplier name is already used";
 
 	public Class<?>[] groups() default {};
 

@@ -2,13 +2,17 @@ package cybersoft.java11.group8.pizza_store.warehouse.dto;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.Column;
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import cybersoft.java11.group8.pizza_store.util.DateUtils;
+import cybersoft.java11.group8.pizza_store.warehouse.util.RawMaterialStatus;
+import cybersoft.java11.group8.pizza_store.warehouse.validation.annotation.UniqueRawMaterialName;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +21,7 @@ import lombok.Setter;
 public class CreateRawMaterialDto {
 	@NotBlank(message = "{raw-material.name.not-blank}")
 	@Size(min = 2, message = "{raw-material.name.size}")
-	@Column(unique = true)
+	@UniqueRawMaterialName
 	private String name;
 	
 	@NotBlank(message = "{raw-material.unit.not-blank}")
@@ -29,10 +33,15 @@ public class CreateRawMaterialDto {
 	@DecimalMin(value = "1000", message = "{raw-material.price.min}")
 	private Float price;
 	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateUtils.DATE_FORMAT)
+	@DateTimeFormat(pattern = DateUtils.DATE_FORMAT)
 	private LocalDateTime importDate;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = DateUtils.DATE_FORMAT)
+	@DateTimeFormat(pattern = DateUtils.DATE_FORMAT)
 	private LocalDateTime expirationDate;
 	
 	private String supplier;
 	
-	private String status;
+	private RawMaterialStatus status;
 }

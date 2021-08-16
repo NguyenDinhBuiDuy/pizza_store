@@ -1,5 +1,7 @@
 package cybersoft.java11.group8.pizza_store.warehouse.controller;
 
+import java.util.Optional;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,8 +40,8 @@ public class SupplierController {
 	public ResponseEntity<Object> findSupplierByName(@PathVariable("supplier-name") String name){
 		if(name == null)
 			return ResponseHandler.getResponse("Please enter supplier name.", HttpStatus.BAD_REQUEST);
-		Supplier supplier = service.findSupplierByName(name);
-		if(supplier == null)
+		Optional<Supplier> supplier = service.findSupplierByName(name);
+		if(supplier.isEmpty())
 			return ResponseHandler.getResponse("Supplier name not found.", HttpStatus.NOT_FOUND);
 		return ResponseHandler.getResponse(supplier, HttpStatus.OK);
 	}
