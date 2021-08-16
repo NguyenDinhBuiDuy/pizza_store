@@ -13,17 +13,22 @@ public class UniqueRoleGroupNameValidator implements ConstraintValidator<UniqueR
 	@Autowired
 	private RoleGroupService _roleGroupService;
 	private String message;
-	
+
 	@Override
 	public boolean isValid(String roleGroupName, ConstraintValidatorContext context) {
 		boolean isTakenRolename = _roleGroupService.isTakenRoleGroupName(roleGroupName);
 		if (!isTakenRolename)
 			return true;
+
+		context.buildConstraintViolationWithTemplate(message).addConstraintViolation()
+				.disableDefaultConstraintViolation();
 		
-		context.buildConstraintViolationWithTemplate(message)
-		.addConstraintViolation()
-		.disableDefaultConstraintViolation();
 		return false;
+	}
+
+	@Override
+	public void initialize(UniqueRoleGroupName constraintAnnotation) {
+		this.message = constraintAnnotation.message();
 	}
 
 }

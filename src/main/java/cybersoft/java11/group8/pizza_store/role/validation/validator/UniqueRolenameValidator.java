@@ -14,6 +14,7 @@ public class UniqueRolenameValidator implements ConstraintValidator<UniqueRoleNa
 	@Autowired
 	private RoleService _service;
 	private String message;
+	
 	@Override
 	public void initialize (UniqueRoleName constraintAnnotation) {
 		this.message = constraintAnnotation.message();

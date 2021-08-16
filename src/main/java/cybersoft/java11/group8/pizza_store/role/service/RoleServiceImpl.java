@@ -11,17 +11,22 @@ import org.springframework.stereotype.Service;
 import cybersoft.java11.group8.pizza_store.role.dto.CreateRoleDTO;
 import cybersoft.java11.group8.pizza_store.role.model.Role;
 import cybersoft.java11.group8.pizza_store.role.repository.RoleRepository;
-
+import cybersoft.java11.group8.pizza_store.util.MapDTOToModel;
+import lombok.AllArgsConstructor;
+@AllArgsConstructor
 @Service
 public class RoleServiceImpl implements RoleService {
-	@Autowired
+
 	private RoleRepository _roleRepository;
+	
+	private MapDTOToModel mapper;
+
 	@Override
 	public void save(Role role) {
 		_roleRepository.save(role);
-		
-		
+
 	}
+
 	@Override
 	public List<Role> findAll() {
 		return _roleRepository.findAll();
@@ -29,7 +34,7 @@ public class RoleServiceImpl implements RoleService {
 
 	@Override
 	public Role findByRoleName(String roleName) {
-		return _roleRepository.findByRolename(roleName);
+		return _roleRepository.findByRolename(roleName).get();
 	}
 
 	@Override
@@ -41,36 +46,39 @@ public class RoleServiceImpl implements RoleService {
 	public List<Role> findRoleWithoutBlankDescription(String roleName) {
 		return _roleRepository.findRoleWithNotNullDescription(roleName);
 	}
-	
+
 	@Override
-	public Role updateRoleInfo(CreateRoleDTO dto, Long roleId) {
-		Role role = _roleRepository.getOne(roleId);
-		role.id(roleId)
-				.roleName(dto.getRolename())
-				.description(dto.getDescription());
-		
-		return _roleRepository.save(role);
-	}
-	@Override
-	public boolean deleteRoleById( Long roleId) {
+	public boolean deleteRoleById(Long roleId) {
 		Optional<Role> role = _roleRepository.findById(roleId);
 		if (role != null) {
-		_roleRepository.deleteById(roleId);
-		return true ;
+			_roleRepository.deleteById(roleId);
+			return true;
 		}
 		return false;
 	}
+
 	@Override
 	public Role save(@Valid CreateRoleDTO dto) {
-		Role role = new Role();
-		role.roleName(dto.getRolename()).description(dto.getDescription());
-		return _roleRepository.save(role);
+		Role model = new Role();
+		model = (Role) mapper.map(dto, model);
+		return _roleRepository.save(model);
 	}
+
 	@Override
 	public boolean isTakenRolename(String rolename) {
 		return _roleRepository.countByRolename(rolename) >= 1;
 	}
 
-	
+	@Override
+	public boolean existById(Long roleId) {
+		return _roleRepository.existsById(roleId);
+	}
 
+	@Override
+	public Role updateRole(CreateRoleDTO dto, Long roleId) {
+		Role role = _roleRepository.getOne(roleId);
+		Role Update = (Role) mapper.map(dto, role);
+
+		return _roleRepository.save(role);
+	}
 }

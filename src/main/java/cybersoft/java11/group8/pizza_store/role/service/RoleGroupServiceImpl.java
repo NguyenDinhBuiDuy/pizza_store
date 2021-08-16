@@ -1,15 +1,17 @@
 package cybersoft.java11.group8.pizza_store.role.service;
 
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import cybersoft.java11.group8.pizza_store.role.dto.CreateRoleGroupDTO;
+import cybersoft.java11.group8.pizza_store.role.dto.UpdateDTO;
 import cybersoft.java11.group8.pizza_store.role.model.Role;
 import cybersoft.java11.group8.pizza_store.role.model.RoleGroup;
 import cybersoft.java11.group8.pizza_store.role.repository.RoleGroupRepository;
@@ -26,11 +28,11 @@ public class RoleGroupServiceImpl implements RoleGroupService {
 	private RoleGroupRepository _roleGroupRepository;
 
 	private UserRepository _userRepository;
-	
+
 	private RoleRepository _roleRepository;
 
 	private MapDTOToModel mapper;
-
+	
 	@Override
 	public List<RoleGroup> findAll() {
 		return _roleGroupRepository.findAll();
@@ -53,12 +55,12 @@ public class RoleGroupServiceImpl implements RoleGroupService {
 		_roleGroupRepository.deleteById(id);
 
 	}
-
 	@Override
-	public RoleGroup addRole(@Valid Role role, Long groupId) {
+	public RoleGroup addRole(@Valid @NotNull String rolename, Long groupId) {
 		RoleGroup roleGroup = _roleGroupRepository.getOne(groupId);
+		Role role = _roleRepository.findByRolename(rolename).get();
 		roleGroup.addRole(role);
-
+		
 		return _roleGroupRepository.save(roleGroup);
 
 	}
@@ -87,15 +89,94 @@ public class RoleGroupServiceImpl implements RoleGroupService {
 	public RoleGroup save(CreateRoleGroupDTO dto) {
 		RoleGroup model = new RoleGroup();
 		model = (RoleGroup) mapper.map(dto, model);
-		
-		Role role = new Role();
-		Iterator<String> iterator = dto.getRoleNames().iterator();
-		while(iterator.hasNext()) {
-			iterator.next();
-           role = _roleRepository.findByRolename(iterator.next());
-           model.addRole(role);
-        }
-		return _roleGroupRepository.save(model);	
+		return _roleGroupRepository.save(model);
 	}
+
+	@Override
+	public boolean findRoleInRoleGroup(@Valid @NotNull Long id,
+			@NotNull String roleName) {
+		RoleGroup roleGroup = _roleGroupRepository.getOne(id);
+		
+		Set<Role> roles = roleGroup.getRoles();
+		for (Role role: roles) {
+			if (role.getRolename().equals(roleName))
+				
+				return true;
+		}
+		return false;
+	}
+	
+	@Override
+	public boolean findUserInRoleGroup(@Valid @NotNull Long id,
+			@NotNull String userName) {
+		RoleGroup roleGroup = _roleGroupRepository.getOne(id);
+		
+		for (User user: roleGroup.getUsers()) {
+			if (user.getUsername().equals(userName))
+				
+				return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteRoleGroupById(@Valid Long groupId) {
+		Optional <RoleGroup> roleGroup = Optional.of(_roleGroupRepository.getOne(groupId));
+		
+		if (roleGroup.isPresent())
+			return true;
+		return false;
+	}
+
+	@Override
+	public boolean deleteRoleInRoleGroup(Long groupId, @Valid String roleName) {
+		RoleGroup roleGroup = _roleGroupRepository.getOne(groupId);
+		
+		Set<Role> roles = roleGroup.getRoles();
+		for (Role role: roles) {
+			if (role.getRolename().equals(roleName)) {
+				roleGroup.getRoles().remove(role);
+				
+				roleGroup.setRoles(roles);
+				_roleGroupRepository.save(roleGroup);
+				
+				return true;
+			}
+				
+		}
+		return false;
+	}
+
+	@Override
+	public boolean deleteUserInRoleGroup(Long groupId, @Valid String userName) {
+		RoleGroup roleGroup = _roleGroupRepository.getOne(groupId);
+		
+		Set<User> users = roleGroup.getUsers();
+		for (User user : users) {
+			if (user.getUsername().equals(userName)) {
+				roleGroup.getUsers().remove(user);
+				
+				roleGroup.setUsers(users);
+				_roleGroupRepository.save(roleGroup);
+				
+				return true;
+			}
+		}
+		return false;
+	}
+
+	@Override
+	public boolean existRoleGroup(Long groupId) {
+		
+		return _roleGroupRepository.existsById(groupId);
+	}
+	
+	@Override
+	public RoleGroup updateRoleGroup(@Valid CreateRoleGroupDTO dto, Long groupId) {
+		RoleGroup group = _roleGroupRepository.getOne(groupId);
+		group = (RoleGroup) mapper.map(dto, group);
+		return _roleGroupRepository.save(group);
+	}
+
 
 }

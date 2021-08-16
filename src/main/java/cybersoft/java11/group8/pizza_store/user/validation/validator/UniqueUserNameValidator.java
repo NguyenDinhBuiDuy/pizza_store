@@ -20,7 +20,7 @@ public class UniqueUserNameValidator implements ConstraintValidator<UniqueUserna
 		if (!isTakenUserName)
 			return true;
 
-		context.buildConstraintViolationWithTemplate(username)
+		context.buildConstraintViolationWithTemplate(message)
 				.addConstraintViolation()
 				.disableDefaultConstraintViolation();
 		return false;

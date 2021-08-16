@@ -13,8 +13,9 @@ public interface RoleService {
 	Role findByRoleName(String roleName);
 	List<Role> findByDescription(String description);
 	List<Role> findRoleWithoutBlankDescription(String roleName);
-	Role updateRoleInfo (CreateRoleDTO dto, Long roleId);
 	boolean deleteRoleById(Long roleId);
 	Role save(@Valid CreateRoleDTO dto);
 	boolean isTakenRolename(String rolename);
+	boolean existById(Long roleId);
+	Role updateRole(CreateRoleDTO dto, Long roleId);
 }

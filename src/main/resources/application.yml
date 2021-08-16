@@ -16,7 +16,6 @@ spring:
   jackson:
     serialization:
       fail-on-empty-beans: false
-      
 pizza_store:
   app:
     jwt-secret: cybersoftpizzaastoreapplication
