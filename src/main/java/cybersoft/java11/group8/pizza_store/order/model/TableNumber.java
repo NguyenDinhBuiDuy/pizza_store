@@ -1,12 +1,18 @@
 package cybersoft.java11.group8.pizza_store.order.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import cybersoft.java11.group8.pizza_store.common_data.model.AbstractEntity;
 import cybersoft.java11.group8.pizza_store.order.util.TableStatus;
@@ -20,14 +26,17 @@ import lombok.Setter;
 public class TableNumber extends AbstractEntity {
 	
 	@Positive
-	Integer tableNumber;
+	private Integer tableNumber;
 	
-	TableStatus tableStatus;
+	private TableStatus tableStatus;
 	
-	Integer tableSize;
+	private Integer tableSize;
 	
-	@ManyToOne (fetch = FetchType.LAZY)
-	Order order ;
+	@ManyToMany(mappedBy = "order")
+	@JsonIgnore
+	private Set<Order> order = new HashSet<>();
 	
-
+	public Set<Order> getTableNumber() {
+		return order;
+	}
 }

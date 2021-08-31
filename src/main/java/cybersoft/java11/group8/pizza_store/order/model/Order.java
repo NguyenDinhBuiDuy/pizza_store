@@ -5,6 +5,11 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.Valid;
@@ -22,13 +27,16 @@ import lombok.Setter;
 public class Order extends AbstractEntity {
 
 	@Positive
-	Integer billNumber;
+	private Integer billNumber;
 	
 	@Positive
-	Long totalPayment;
+	private Long totalPayment;
 	
-	@OneToMany (mappedBy = "order", cascade = CascadeType.ALL)
-	Set<TableNumber> tableNumbers = new HashSet<TableNumber>();
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
+	@JoinTable(name = "pizza_store_table_number_order",
+				joinColumns = @JoinColumn(name = "table_number"),
+				inverseJoinColumns = @JoinColumn(name = "order_id"))
+	Set<TableNumber> tableNumber = new HashSet<>();
 	
 	@OneToMany (mappedBy = "order", cascade = CascadeType.ALL)
 	Set<OrderDetail> orderDetails = new HashSet<>();
@@ -36,15 +44,12 @@ public class Order extends AbstractEntity {
 	public Order addOrderDetail(@Valid OrderDetail orderDetail) {
 		this.orderDetails.add(orderDetail);
 		orderDetail.setOrder(this);
-		
 		return this;
-		
 	}
-
-	public Order addTableNumber(@Valid @NotBlank TableNumber tableNumber) {
-		this.tableNumbers.add(tableNumber);
-		tableNumber.setOrder(this);
-		
+	
+	public Order updateTableNumberToOrder(TableNumber tableNumber) {
+		this.tableNumber.add(tableNumber);
+		tableNumber.getTableNumber().add(this);
 		return this;
-		
 	}
+}

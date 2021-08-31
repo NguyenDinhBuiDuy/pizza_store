@@ -18,9 +18,9 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class OrderServiceImpl extends GenericServiceImpl<Order, Long> implements OrderService {
-
-	OrderRepository _orderRepository;
-	MapDTOToModel mapper;
+	@Autowired
+	private OrderRepository _orderRepository;
+	private MapDTOToModel mapper;
 
 	@Override
 	public Order save(@Valid CreateOrderDTO dto) {
@@ -54,14 +54,13 @@ public class OrderServiceImpl extends GenericServiceImpl<Order, Long> implements
 		return _orderRepository.save(order);
 		
 	}
-
+	
 	@Override
-	public Order addTableNumber(@Valid @NotBlank TableNumber tableNumber, Long orderId) {
+	public Order updateTableNumberToOrder(@Valid @NotBlank TableNumber tableNumber, Long orderId) {
 		Order order = _orderRepository.getOne(orderId);
 		
-		order.addTableNumber(tableNumber);
+		order.updateTableNumberToOrder(tableNumber);
 		
 		return _orderRepository.save(order);
 	}
-
 }
