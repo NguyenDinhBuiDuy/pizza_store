@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -33,39 +34,36 @@ import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping ("/api/odrer")
+@RequestMapping ("/api/order")
 public class OrderController {
-	
-	OrderService _orderService;
-	OrderDetailService _orderDetailService;
-	TableNumberService _tableNumberService;
+	@Autowired
+	private OrderService _orderService;
+	private OrderDetailService _orderDetailService;
+	private TableNumberService _tableNumberService;
 	
 	@GetMapping("")
 	public ResponseEntity<Object> findAllOrders(){
-		List<Order> oders = _orderService.findAll();
-		if (oders.isEmpty()) {
+		List<Order> orders = _orderService.findAll();
+		if (orders.isEmpty())
 			return ResponseHandler.getResponse("there is no data", HttpStatus.BAD_REQUEST);
-		}
-		return ResponseHandler.getResponse(oders, HttpStatus.OK);
+		return ResponseHandler.getResponse(orders, HttpStatus.OK);
 	}
+	
 	@GetMapping("/{order-id}")
 	public ResponseEntity<Object> findOrderById(@Valid @PathVariable("order-id") Long orderId){
 		
 		Optional<Order> order = _orderService.findById(orderId);
-		if (order.isEmpty()) {
-			return ResponseHandler.getResponse( "there is no data", HttpStatus.BAD_REQUEST);
-		}
-		
+		if (order.isEmpty())
+			return ResponseHandler.getResponse("there is no data", HttpStatus.BAD_REQUEST);
 		return ResponseHandler.getResponse(order, HttpStatus.OK);
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<Object> saveOrder(@Valid @RequestBody CreateOrderDTO dto, BindingResult errors){
+	public ResponseEntity<Object> saveOrder(@Valid @Positive @RequestBody CreateOrderDTO dto, BindingResult errors){
 		if (errors.hasErrors()) {
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		}
-		Order order  = new Order();
-		order = _orderService.save(dto);
+		Order order = _orderService.save(dto);
 		return ResponseHandler.getResponse(order, HttpStatus.CREATED);
 	}
 	
@@ -77,9 +75,8 @@ public class OrderController {
 		if (!_orderService.existOrder(orderId))
 			return ResponseHandler.getResponse("there is no order id: " + orderId, HttpStatus.BAD_REQUEST);
 		
-		Order updateOrder  = new Order();
-		updateOrder = _orderService.update(dto, orderId);
-		return ResponseHandler.getResponse(updateOrder, HttpStatus.CREATED);
+		Order updateOrder = _orderService.update(dto, orderId);
+		return ResponseHandler.getResponse(updateOrder, HttpStatus.OK);
 	}
 	
 	@PutMapping("/{order-id}/order_detail")
@@ -99,23 +96,21 @@ public class OrderController {
 	}
 	
 	@PutMapping("/{order-id}/table_number")
-	public ResponseEntity<Object> addTableNumber(@Valid @NotBlank @RequestBody TableNumber tableNumber , @PathVariable ("order-id") Long orderId, BindingResult errors){
+	public ResponseEntity<Object> updateTableNumberToOrder(@Valid @Positive @NotBlank @RequestBody TableNumber tableNumber , @PathVariable ("order-id") Long orderId, BindingResult errors, TableStatus tableStatus){
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		
 		if (!_orderService.existOrder(orderId))
 			return ResponseHandler.getResponse("there is no order id: " + orderId, HttpStatus.BAD_REQUEST);
 		
-		if (!_tableNumberService.existTableNumber(tableNumber.getId()))
-			return ResponseHandler.getResponse("there is no order id: " + tableNumber.getId(), HttpStatus.BAD_REQUEST);
+//		if (!_tableNumberService.existTableNumber(order.getId()))
+//			return ResponseHandler.getResponse("there is no order id: " + order.getId(), HttpStatus.BAD_REQUEST);
 		
-		if (tableNumber.getTableStatus().equals(TableStatus.ORDERED))
+		if (_tableNumberService.getTableStatus(tableStatus).equals(TableStatus.ORDERED))
 			return ResponseHandler.getResponse("table is ordered", HttpStatus.BAD_REQUEST);
 		
-		Order updateOrder  = new Order();
-		
-		updateOrder = _orderService.addTableNumber(tableNumber,orderId);
-		return ResponseHandler.getResponse(updateOrder, HttpStatus.CREATED);
+		Order updateTableNumber  = _orderService.updateTableNumberToOrder(tableNumber, orderId);
+		return ResponseHandler.getResponse(updateTableNumber, HttpStatus.OK);
 	}
 	
 	

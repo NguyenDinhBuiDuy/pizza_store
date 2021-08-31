@@ -5,7 +5,6 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -20,12 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import cybersoft.java11.group8.pizza_store.common_data.model.ResponseHandler;
 import cybersoft.java11.group8.pizza_store.fb_category.service.BeverageService;
 import cybersoft.java11.group8.pizza_store.fb_category.service.PizzaService;
-import cybersoft.java11.group8.pizza_store.order.dto.CreateOrderDTO;
 import cybersoft.java11.group8.pizza_store.order.dto.CreateOrderDetailDTO;
-import cybersoft.java11.group8.pizza_store.order.model.Order;
 import cybersoft.java11.group8.pizza_store.order.model.OrderDetail;
 import cybersoft.java11.group8.pizza_store.order.service.OrderDetailService;
-import cybersoft.java11.group8.pizza_store.order.service.OrderService;
 import lombok.AllArgsConstructor;
 
 @RestController

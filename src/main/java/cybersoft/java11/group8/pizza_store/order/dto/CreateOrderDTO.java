@@ -9,5 +9,5 @@ import lombok.Setter;
 @Setter
 public class CreateOrderDTO {
 	@Positive
-	Integer billNumber;
+	private Integer billNumber;
 }

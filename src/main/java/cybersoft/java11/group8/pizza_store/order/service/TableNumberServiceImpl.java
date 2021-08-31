@@ -3,6 +3,7 @@ package cybersoft.java11.group8.pizza_store.order.service;
 import java.util.Optional;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,19 +19,26 @@ import cybersoft.java11.group8.pizza_store.order.dto.CreateOrderDTO;
 import cybersoft.java11.group8.pizza_store.order.dto.CreateOrderDetailDTO;
 import cybersoft.java11.group8.pizza_store.order.model.Order;
 import cybersoft.java11.group8.pizza_store.order.model.OrderDetail;
+import cybersoft.java11.group8.pizza_store.order.model.TableNumber;
 import cybersoft.java11.group8.pizza_store.order.repository.OrderDetailRepository;
 import cybersoft.java11.group8.pizza_store.order.repository.TableNumberRepository;
+import cybersoft.java11.group8.pizza_store.order.util.TableStatus;
 import cybersoft.java11.group8.pizza_store.util.MapDTOToModel;
 import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-public class TableNumberServiceImpl extends GenericServiceImpl<OrderDetail, Long> implements TableNumberService {
+public class TableNumberServiceImpl extends GenericServiceImpl<TableNumber, Long> implements TableNumberService {
+	@Autowired
+	private TableNumberRepository tableNumberRepository;
+	private PizzaRepository _pizzaRepository;
+	private BeverageRepository _BeverageRepository;
+	private MapDTOToModel mapper;
 	
-	TableNumberRepository _tableNumberlRepository;
-	PizzaRepository _pizzaRepository;
-	BeverageRepository _BeverageRepository;
-	MapDTOToModel mapper;
+	@Override
+	public TableStatus getTableStatus(TableStatus tableStatus) {
+		return tableStatus;
+	}
 	
 //	@Override
 //	public OrderDetail save(@Valid CreateOrderDetailDTO dto) {
@@ -57,11 +65,11 @@ public class TableNumberServiceImpl extends GenericServiceImpl<OrderDetail, Long
 //		
 //	}
 	
-	@Override
-	public boolean existTableNumber(Long tableId) {
-	
-		return _tableNumberlRepository.existsById(tableId);
-	}
+//	@Override
+//	public boolean existTableNumber(Long tableId) {
+//	
+//		return tableNumberRepository.existsById(tableId);
+//	}
 
 
 
@@ -92,5 +100,4 @@ public class TableNumberServiceImpl extends GenericServiceImpl<OrderDetail, Long
 //		return _orderDetailRepository.save(model);
 //	}
 //
-
 }

@@ -18,7 +18,6 @@ public interface OrderService extends GenericService<Order, Long>{
 	Order update(@Valid CreateOrderDTO dto, Long orderId);
 
 	Order addOrderDetail(@Valid OrderDetail orderDetail, Long orderId);
-
-	Order addTableNumber(@Valid @NotBlank TableNumber tableNumber, Long orderId);
-
+	
+	Order updateTableNumberToOrder(@Valid @NotBlank TableNumber tableNumber, Long orderId);
 }
