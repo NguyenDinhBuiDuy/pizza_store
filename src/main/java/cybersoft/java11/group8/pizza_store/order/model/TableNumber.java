@@ -3,13 +3,9 @@ package cybersoft.java11.group8.pizza_store.order.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -32,7 +28,7 @@ public class TableNumber extends AbstractEntity {
 	
 	private Integer tableSize;
 	
-	@ManyToMany(mappedBy = "order")
+	@ManyToMany(mappedBy = "tableNumber")
 	@JsonIgnore
 	private Set<Order> order = new HashSet<>();
 	
