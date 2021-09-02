@@ -1,4 +1,6 @@
+## **The website is a sales/business support system for the food and beverage industry, specifically the pizzeria.**
+
 MEMBER LIST
 
-- Nguyen Dinh Bui Duy
-- Ly Huynh Vu
+- [Ly Huynh Vu](https://github.com/lyhuynhvu)
+- [Nguyen Dinh Bui Duy](https://github.com/NguyenDinhBuiDuy)
