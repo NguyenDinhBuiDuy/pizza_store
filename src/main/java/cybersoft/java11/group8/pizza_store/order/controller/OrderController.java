@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cybersoft.java11.group8.pizza_store.common_data.model.ResponseHandler;
 import cybersoft.java11.group8.pizza_store.order.dto.CreateOrderDTO;
+import cybersoft.java11.group8.pizza_store.order.dto.UpdateTableNumberDto;
 import cybersoft.java11.group8.pizza_store.order.model.Order;
 import cybersoft.java11.group8.pizza_store.order.model.OrderDetail;
-import cybersoft.java11.group8.pizza_store.order.model.TableNumber;
 import cybersoft.java11.group8.pizza_store.order.service.OrderDetailService;
 import cybersoft.java11.group8.pizza_store.order.service.OrderService;
 import cybersoft.java11.group8.pizza_store.order.service.TableNumberService;
@@ -85,7 +84,7 @@ public class OrderController {
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 			
 		if (!_orderService.existOrder(orderId))
-			return ResponseHandler.getResponse("there is no order id: " + orderId, HttpStatus.BAD_REQUEST);
+			return ResponseHandler.getResponse("order id does not exist: " + orderId, HttpStatus.BAD_REQUEST);
 		
 		if (!_orderDetailService.existOrderDetail(orderDetail.getId()))
 			return ResponseHandler.getResponse("there is no order detail id: " + orderDetail.getId(), HttpStatus.BAD_REQUEST);
@@ -96,12 +95,12 @@ public class OrderController {
 	}
 	
 	@PutMapping("/{order-id}/table_number")
-	public ResponseEntity<Object> updateTableNumberToOrder(@Valid @Positive @NotBlank @RequestBody TableNumber tableNumber , @PathVariable ("order-id") Long orderId, BindingResult errors, TableStatus tableStatus){
+	public ResponseEntity<Object> updateTableNumberToOrder(@Valid @Positive @RequestBody UpdateTableNumberDto tableNumber , @PathVariable("order-id") Long orderId, BindingResult errors, TableStatus tableStatus){
+		if (!_orderService.existOrder(orderId))
+			return ResponseHandler.getResponse("order id does not exist: " + orderId, HttpStatus.BAD_REQUEST);
+		
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
-		
-		if (!_orderService.existOrder(orderId))
-			return ResponseHandler.getResponse("there is no order id: " + orderId, HttpStatus.BAD_REQUEST);
 		
 //		if (!_tableNumberService.existTableNumber(order.getId()))
 //			return ResponseHandler.getResponse("there is no order id: " + order.getId(), HttpStatus.BAD_REQUEST);
