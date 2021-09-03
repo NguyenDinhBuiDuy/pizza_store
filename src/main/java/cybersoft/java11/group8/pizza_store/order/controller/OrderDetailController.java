@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -28,10 +29,10 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 @RequestMapping("/api/oder_detail")
 public class OrderDetailController {
-
-	OrderDetailService _orderDetailService;
-	PizzaService _pizzaService;
-	BeverageService _beveragService;
+	@Autowired
+	private OrderDetailService _orderDetailService;
+	private PizzaService _pizzaService;
+	private BeverageService _beveragService;
 
 	@GetMapping("")
 	public ResponseEntity<Object> findAllOrderDetails() {
@@ -43,14 +44,12 @@ public class OrderDetailController {
 	}
 
 	@GetMapping("/{order-detail-id}")
-	public ResponseEntity<Object> findOrderDetailById(@Valid @PathVariable("order-detail-id") Long orderDetailId) {
-
-		Optional<OrderDetail> oderDetail = _orderDetailService.findById(orderDetailId);
-		if (oderDetail.isEmpty()) {
+	public ResponseEntity<Object> findOrderDetailById(@PathVariable("order-detail-id") Long orderDetailId) {
+		Optional<OrderDetail> orderDetail = _orderDetailService.findById(orderDetailId);
+		if (orderDetail.isEmpty()) {
 			return ResponseHandler.getResponse("there is no data", HttpStatus.BAD_REQUEST);
 		}
-
-		return ResponseHandler.getResponse(oderDetail, HttpStatus.OK);
+		return ResponseHandler.getResponse(orderDetail, HttpStatus.OK);
 	}
 
 	@PostMapping("/pizza")
