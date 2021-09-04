@@ -20,22 +20,19 @@ import org.springframework.web.bind.annotation.RestController;
 import cybersoft.java11.group8.pizza_store.common_data.model.ResponseHandler;
 import cybersoft.java11.group8.pizza_store.fb_category.service.BeverageService;
 import cybersoft.java11.group8.pizza_store.fb_category.service.PizzaService;
-import cybersoft.java11.group8.pizza_store.order.dto.CreateOrderDTO;
 import cybersoft.java11.group8.pizza_store.order.dto.CreateOrderDetailDTO;
-import cybersoft.java11.group8.pizza_store.order.model.Order;
 import cybersoft.java11.group8.pizza_store.order.model.OrderDetail;
 import cybersoft.java11.group8.pizza_store.order.service.OrderDetailService;
-import cybersoft.java11.group8.pizza_store.order.service.OrderService;
 import lombok.AllArgsConstructor;
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/oder_detail")
 public class OrderDetailController {
-
-	OrderDetailService _orderDetailService;
-	PizzaService _pizzaService;
-	BeverageService _beveragService;
+	@Autowired
+	private OrderDetailService _orderDetailService;
+	private PizzaService _pizzaService;
+	private BeverageService _beveragService;
 
 	@GetMapping("")
 	public ResponseEntity<Object> findAllOrderDetails() {
@@ -47,14 +44,12 @@ public class OrderDetailController {
 	}
 
 	@GetMapping("/{order-detail-id}")
-	public ResponseEntity<Object> findOrderDetailById(@Valid @PathVariable("order-detail-id") Long orderDetailId) {
-
-		Optional<OrderDetail> oderDetail = _orderDetailService.findById(orderDetailId);
-		if (oderDetail.isEmpty()) {
+	public ResponseEntity<Object> findOrderDetailById(@PathVariable("order-detail-id") Long orderDetailId) {
+		Optional<OrderDetail> orderDetail = _orderDetailService.findById(orderDetailId);
+		if (orderDetail.isEmpty()) {
 			return ResponseHandler.getResponse("there is no data", HttpStatus.BAD_REQUEST);
 		}
-
-		return ResponseHandler.getResponse(oderDetail, HttpStatus.OK);
+		return ResponseHandler.getResponse(orderDetail, HttpStatus.OK);
 	}
 
 	@PostMapping("/pizza")

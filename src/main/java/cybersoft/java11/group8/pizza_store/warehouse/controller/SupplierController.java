@@ -26,13 +26,13 @@ import cybersoft.java11.group8.pizza_store.warehouse.service.SupplierService;
 @RequestMapping("/api/supplier")
 public class SupplierController {
 	@Autowired
-	private SupplierService service;
+	private SupplierService supplierService;
 	
 	@PostMapping("")
 	public ResponseEntity<Object> save(@Valid @RequestBody CreateSupplierDto dto, BindingResult errors){
 		if(errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
-		Supplier newSupplier = service.save(dto);
+		Supplier newSupplier = supplierService.save(dto);
 		return ResponseHandler.getResponse(newSupplier, HttpStatus.CREATED);
 	}
 	
@@ -40,9 +40,9 @@ public class SupplierController {
 	public ResponseEntity<Object> findSupplierByName(@PathVariable("supplier-name") String name){
 		if(name == null)
 			return ResponseHandler.getResponse("Please enter supplier name.", HttpStatus.BAD_REQUEST);
-		Optional<Supplier> supplier = service.findSupplierByName(name);
+		Optional<Supplier> supplier = supplierService.findSupplierByName(name);
 		if(supplier.isEmpty())
-			return ResponseHandler.getResponse("Supplier name not found.", HttpStatus.NOT_FOUND);
+			return ResponseHandler.getResponse("Supplier name is not found.", HttpStatus.NOT_FOUND);
 		return ResponseHandler.getResponse(supplier, HttpStatus.OK);
 	}
 	
@@ -52,11 +52,11 @@ public class SupplierController {
 													BindingResult errors){
 		if(supplierId == null)
 			return ResponseHandler.getResponse("Please enter supplier id.", HttpStatus.BAD_REQUEST);
-		if(!service.existById(supplierId))
-			return ResponseHandler.getResponse("Supplier id not found.", HttpStatus.NOT_FOUND);
+		if(!supplierService.existById(supplierId))
+			return ResponseHandler.getResponse("Supplier id is not found.", HttpStatus.NOT_FOUND);
 		if(errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
-		Supplier updateSupplier = service.updateSupplierInfo(dto, supplierId);
+		Supplier updateSupplier = supplierService.updateSupplierInfo(dto, supplierId);
 		return ResponseHandler.getResponse(updateSupplier, HttpStatus.OK);
 	}
 	
@@ -64,9 +64,9 @@ public class SupplierController {
 	public ResponseEntity<Object> deleteSupplier(@PathVariable("supplier-id") Long supplierId){
 		if(supplierId == null)
 			return ResponseHandler.getResponse("Please enter supplier id.", HttpStatus.BAD_REQUEST);
-		if(!service.existById(supplierId))
+		if(!supplierService.existById(supplierId))
 			return ResponseHandler.getResponse("Supplier id does not exist.", HttpStatus.BAD_REQUEST);
-		service.deleteById(supplierId);
+		supplierService.deleteById(supplierId);
 		return ResponseHandler.getResponse("Remove the supplier successfully.", HttpStatus.OK);
 	}
 }
