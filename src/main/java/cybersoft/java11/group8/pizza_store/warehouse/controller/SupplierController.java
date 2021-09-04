@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cybersoft.java11.group8.pizza_store.common_data.model.ResponseHandler;
 import cybersoft.java11.group8.pizza_store.warehouse.dto.CreateSupplierDto;
+import cybersoft.java11.group8.pizza_store.warehouse.dto.UpdateSupplierDto;
 import cybersoft.java11.group8.pizza_store.warehouse.model.Supplier;
 import cybersoft.java11.group8.pizza_store.warehouse.service.SupplierService;
 
@@ -47,7 +48,7 @@ public class SupplierController {
 	}
 	
 	@PutMapping("/{supplier-id}")
-	public ResponseEntity<Object> updateSupplierInfo(@Valid @RequestBody CreateSupplierDto dto,
+	public ResponseEntity<Object> updateSupplierInfo(@Valid @RequestBody UpdateSupplierDto dto,
 													@PathVariable ("supplier-id") Long supplierId,
 													BindingResult errors){
 		if(supplierId == null)

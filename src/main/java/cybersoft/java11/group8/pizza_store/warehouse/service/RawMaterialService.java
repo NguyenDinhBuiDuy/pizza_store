@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import cybersoft.java11.group8.pizza_store.common_data.GenericService;
 import cybersoft.java11.group8.pizza_store.warehouse.dto.CreateRawMaterialDto;
+import cybersoft.java11.group8.pizza_store.warehouse.dto.UpdateRawMaterialDto;
 import cybersoft.java11.group8.pizza_store.warehouse.model.RawMaterial;
 
 public interface RawMaterialService extends GenericService<RawMaterial, Long> {
@@ -15,7 +16,7 @@ public interface RawMaterialService extends GenericService<RawMaterial, Long> {
 	
 	List<RawMaterial> findRawMaterialBySupplierName(String name);
 
-	RawMaterial updateRawMaterialInfo(CreateRawMaterialDto dto, Long rawMaterialId);
+	RawMaterial updateRawMaterialInfo(UpdateRawMaterialDto dto, Long rawMaterialId);
 	
 	Boolean existById(Long rawMaterialId);
 }

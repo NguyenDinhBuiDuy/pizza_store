@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cybersoft.java11.group8.pizza_store.common_data.model.ResponseHandler;
 import cybersoft.java11.group8.pizza_store.warehouse.dto.CreateRawMaterialDto;
+import cybersoft.java11.group8.pizza_store.warehouse.dto.UpdateRawMaterialDto;
 import cybersoft.java11.group8.pizza_store.warehouse.model.RawMaterial;
 import cybersoft.java11.group8.pizza_store.warehouse.service.RawMaterialService;
 
@@ -58,7 +59,7 @@ public class RawMaterialController {
 	}
 	
 	@PutMapping("/{raw-material-id}")
-	public ResponseEntity<Object> updateRawMaterialInfo(@Valid @RequestBody CreateRawMaterialDto dto,
+	public ResponseEntity<Object> updateRawMaterialInfo(@Valid @RequestBody UpdateRawMaterialDto dto,
 													@PathVariable ("raw-material-id") Long rawMaterialId,
 													BindingResult errors){
 		if(rawMaterialId == null)
