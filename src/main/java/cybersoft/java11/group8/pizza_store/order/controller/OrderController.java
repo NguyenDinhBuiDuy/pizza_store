@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cybersoft.java11.group8.pizza_store.common_data.model.ResponseHandler;
 import cybersoft.java11.group8.pizza_store.order.dto.CreateOrderDTO;
+import cybersoft.java11.group8.pizza_store.order.dto.UpdateOrderDto;
 import cybersoft.java11.group8.pizza_store.order.model.Order;
 import cybersoft.java11.group8.pizza_store.order.model.OrderDetail;
 import cybersoft.java11.group8.pizza_store.order.service.OrderService;
@@ -58,7 +59,7 @@ public class OrderController {
 	}
 	
 	@PutMapping("/{order-id}")
-	public ResponseEntity<Object> updateOrder(@Valid @Positive @RequestBody CreateOrderDTO dto, @PathVariable("order-id") Long orderId, BindingResult errors){
+	public ResponseEntity<Object> updateOrder(@Valid @Positive @RequestBody UpdateOrderDto dto, @PathVariable("order-id") Long orderId, BindingResult errors){
 		if(orderId == null)
 			return ResponseHandler.getResponse("Please enter order id.", HttpStatus.BAD_REQUEST);
 		if (errors.hasErrors())

@@ -5,6 +5,7 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 
 import cybersoft.java11.group8.pizza_store.common_data.model.AbstractEntity;
@@ -19,7 +20,7 @@ import lombok.Setter;
 @Entity
 @Table (name = "pizza_store_order_detail")
 public class OrderDetail extends AbstractEntity{
-	
+	@NotBlank
 	@Positive
 	private Integer quantity;
 	
@@ -29,6 +30,7 @@ public class OrderDetail extends AbstractEntity{
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Beverage beverage ;
 	
+	@NotBlank
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Order order;
 

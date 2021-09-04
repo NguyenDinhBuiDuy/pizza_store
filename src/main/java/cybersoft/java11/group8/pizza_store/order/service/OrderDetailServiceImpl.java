@@ -12,6 +12,7 @@ import cybersoft.java11.group8.pizza_store.fb_category.model.pizza.Pizza;
 import cybersoft.java11.group8.pizza_store.fb_category.repository.BeverageRepository;
 import cybersoft.java11.group8.pizza_store.fb_category.repository.PizzaRepository;
 import cybersoft.java11.group8.pizza_store.order.dto.CreateOrderDetailDTO;
+import cybersoft.java11.group8.pizza_store.order.dto.UpdateOrderDetailDto;
 import cybersoft.java11.group8.pizza_store.order.model.OrderDetail;
 import cybersoft.java11.group8.pizza_store.order.repository.OrderDetailRepository;
 import cybersoft.java11.group8.pizza_store.util.MapDTOToModel;
@@ -54,7 +55,7 @@ public class OrderDetailServiceImpl extends GenericServiceImpl<OrderDetail, Long
 	}
 
 	@Override
-	public OrderDetail update(@Valid CreateOrderDetailDTO dto, Long orderDetailId) {
+	public OrderDetail update(@Valid UpdateOrderDetailDto dto, Long orderDetailId) {
 		OrderDetail model = _orderDetailRepository.getOne(orderDetailId);
 		model = (OrderDetail) mapper.map(dto, model);
 		

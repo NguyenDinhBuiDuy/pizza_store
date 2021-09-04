@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import cybersoft.java11.group8.pizza_store.common_data.GenericServiceImpl;
 import cybersoft.java11.group8.pizza_store.util.MapDTOToModel;
 import cybersoft.java11.group8.pizza_store.warehouse.dto.CreateSupplierDto;
+import cybersoft.java11.group8.pizza_store.warehouse.dto.UpdateSupplierDto;
 import cybersoft.java11.group8.pizza_store.warehouse.model.Supplier;
 import cybersoft.java11.group8.pizza_store.warehouse.repository.SupplierRepository;
 import lombok.AllArgsConstructor;
@@ -32,7 +33,7 @@ public class SupplierServiceImpl extends GenericServiceImpl<Supplier, Long> impl
 	}
 
 	@Override
-	public Supplier updateSupplierInfo(CreateSupplierDto dto, Long supplierId) {
+	public Supplier updateSupplierInfo(UpdateSupplierDto dto, Long supplierId) {
 		Supplier supplier = supplierRepository.getOne(supplierId);
 		supplier = mapper.map(dto, supplier);
 		return supplierRepository.save(supplier);

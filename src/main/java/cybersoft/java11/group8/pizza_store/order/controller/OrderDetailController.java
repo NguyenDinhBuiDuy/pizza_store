@@ -21,6 +21,7 @@ import cybersoft.java11.group8.pizza_store.common_data.model.ResponseHandler;
 import cybersoft.java11.group8.pizza_store.fb_category.service.BeverageService;
 import cybersoft.java11.group8.pizza_store.fb_category.service.PizzaService;
 import cybersoft.java11.group8.pizza_store.order.dto.CreateOrderDetailDTO;
+import cybersoft.java11.group8.pizza_store.order.dto.UpdateOrderDetailDto;
 import cybersoft.java11.group8.pizza_store.order.model.OrderDetail;
 import cybersoft.java11.group8.pizza_store.order.service.OrderDetailService;
 import lombok.AllArgsConstructor;
@@ -82,7 +83,7 @@ public class OrderDetailController {
 	}
 
 	@PutMapping("/{order-detail-id}/pizza")
-	public ResponseEntity<Object> updatePizzaOrderDetail(@Valid CreateOrderDetailDTO dto,
+	public ResponseEntity<Object> updatePizzaOrderDetail(@Valid UpdateOrderDetailDto dto,
 			@PathVariable("order-detail-id") Long orderDetailId, BindingResult errors) {
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
@@ -101,7 +102,7 @@ public class OrderDetailController {
 	}
 	
 	@PutMapping("/{order-detail-id}/beverage")
-	public ResponseEntity<Object> updateBeverageOrderDetail(@Valid CreateOrderDetailDTO dto,
+	public ResponseEntity<Object> updateBeverageOrderDetail(@Valid UpdateOrderDetailDto dto,
 			@PathVariable("order-detail-id") Long orderDetailId, BindingResult errors) {
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
