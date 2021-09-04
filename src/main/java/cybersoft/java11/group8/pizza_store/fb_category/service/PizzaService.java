@@ -7,6 +7,7 @@ import javax.validation.constraints.NotNull;
 
 import cybersoft.java11.group8.pizza_store.common_data.GenericService;
 import cybersoft.java11.group8.pizza_store.fb_category.dto.CreatePizzaDTO;
+import cybersoft.java11.group8.pizza_store.fb_category.dto.UpdatePizzaDTO;
 import cybersoft.java11.group8.pizza_store.fb_category.model.pizza.Pizza;
 
 public interface PizzaService extends GenericService<Pizza, Long> {
@@ -19,7 +20,7 @@ public interface PizzaService extends GenericService<Pizza, Long> {
 
 	boolean removeRawMeterialInPizza(String rawMaterialName, @Valid @NotNull Long pizzaId);
 
-	Pizza update(@Valid CreatePizzaDTO dto, Long pizzaId);
+	Pizza update( @Valid UpdatePizzaDTO dto, Long pizzaId);
 
 	Pizza addTopping(@Valid String toppingName, Long pizzaId);
 

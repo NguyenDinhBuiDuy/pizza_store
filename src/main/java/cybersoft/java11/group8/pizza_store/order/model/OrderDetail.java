@@ -44,3 +44,4 @@ public class OrderDetail extends AbstractEntity{
 		return this;
 	}
 }
+

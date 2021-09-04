@@ -14,7 +14,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreatePizzaToppingDTO {
+public class UpadatePizzaToppingDTO {
 	
 	@NotBlank (message = "{fbcategory.name.notblank}")
 	String name;

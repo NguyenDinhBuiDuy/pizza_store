@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cybersoft.java11.group8.pizza_store.common_data.model.ResponseHandler;
 import cybersoft.java11.group8.pizza_store.user.dto.CreateUserDTO;
+import cybersoft.java11.group8.pizza_store.user.dto.UpdateUserDTO;
 import cybersoft.java11.group8.pizza_store.user.model.User;
 import cybersoft.java11.group8.pizza_store.user.service.UserService;
 
@@ -64,7 +65,7 @@ public class UserController {
 	}
 	
 	@PutMapping("/{user-id}")
-	public ResponseEntity<Object> updateUser(@Valid CreateUserDTO dto, @Valid @NotNull @PathVariable ("user-id") Long userId, BindingResult errors){
+	public ResponseEntity<Object> updateUser(@Valid UpdateUserDTO dto, @Valid @NotNull @PathVariable ("user-id") Long userId, BindingResult errors){
 		if (errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
 		
@@ -72,7 +73,7 @@ public class UserController {
 			return ResponseHandler.getResponse("there is no user id: " + userId, HttpStatus.BAD_REQUEST);
 		
 		User user = new User();
-		user = _service.save(dto);
+		user = _service.update(userId, dto);
 		return ResponseHandler.getResponse(user, HttpStatus.CREATED);
 	}
 	

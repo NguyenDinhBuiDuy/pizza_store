@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cybersoft.java11.group8.pizza_store.common_data.model.ResponseHandler;
 import cybersoft.java11.group8.pizza_store.fb_category.dto.CreateBeverageDTO;
 import cybersoft.java11.group8.pizza_store.fb_category.dto.CreatePizzaDTO;
+import cybersoft.java11.group8.pizza_store.fb_category.dto.UpdatePizzaDTO;
 import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.Beverage;
 import cybersoft.java11.group8.pizza_store.fb_category.model.pizza.Pizza;
 import cybersoft.java11.group8.pizza_store.fb_category.repository.PizzaRepository;
@@ -71,7 +72,7 @@ public class PizzaController {
 	}
 	
 	@PutMapping("/{pizza-id}")
-	public ResponseEntity<Object> updatePizza(@Valid @RequestBody CreatePizzaDTO dto,
+	public ResponseEntity<Object> updatePizza(@Valid @RequestBody UpdatePizzaDTO dto,
 			@PathVariable ("pizza-id") Long pizzaId, 
 			BindingResult errors){
 		if (errors.hasErrors())

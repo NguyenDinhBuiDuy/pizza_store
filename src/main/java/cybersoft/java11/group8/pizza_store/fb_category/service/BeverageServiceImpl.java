@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import cybersoft.java11.group8.pizza_store.common_data.GenericServiceImpl;
 import cybersoft.java11.group8.pizza_store.fb_category.dto.CreateBeverageDTO;
+import cybersoft.java11.group8.pizza_store.fb_category.dto.UpdateBeverageDTO;
 import cybersoft.java11.group8.pizza_store.fb_category.model.FB_Status;
 import cybersoft.java11.group8.pizza_store.fb_category.model.FB_Type;
 import cybersoft.java11.group8.pizza_store.fb_category.model.beverage.Beverage;
@@ -80,7 +81,7 @@ public class BeverageServiceImpl extends GenericServiceImpl<Beverage, Long> impl
 	}
 
 	@Override
-	public Beverage update(@Valid CreateBeverageDTO dto, Long beverageId) {
+	public Beverage update(@Valid UpdateBeverageDTO dto, Long beverageId) {
 		Beverage model = _beverageRepository.getOne(beverageId);
 		model = (Beverage) mapper.map(dto, model);
 		

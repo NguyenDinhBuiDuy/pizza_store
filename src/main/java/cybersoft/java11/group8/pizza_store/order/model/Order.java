@@ -32,5 +32,16 @@ public class Order extends AbstractEntity {
 		this.orderDetails.add(orderDetail);
 		orderDetail.setOrder(this);
 		return this;
+		
+		
 	}
+	public Order totalPaymentCaculation() {
+		for (OrderDetail orderDetail : orderDetails) {
+			this.totalPayment = orderDetail.getBeverage().getPrice() * orderDetail.getQuantity();
+		}
+		return this;
+	}
+	
 }
+
+
