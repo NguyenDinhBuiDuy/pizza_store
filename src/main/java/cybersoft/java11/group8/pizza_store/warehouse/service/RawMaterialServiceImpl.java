@@ -1,5 +1,6 @@
 package cybersoft.java11.group8.pizza_store.warehouse.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,10 @@ public class RawMaterialServiceImpl extends GenericServiceImpl<RawMaterial, Long
 	@Override
 	public Boolean existById(Long rawMaterialId) {
 		return rawMaterialRepository.existsById(rawMaterialId);
+	}
+
+	@Override
+	public List<RawMaterial> findRawMaterialBySupplierName(String name) {
+		return rawMaterialRepository.findRawMaterialBySupplierName(name);
 	}
 }
