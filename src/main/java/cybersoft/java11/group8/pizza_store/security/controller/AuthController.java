@@ -48,4 +48,5 @@ public class AuthController {
 		
 		return ResponseHandler.getResponse("Username or password is invalid.", HttpStatus.BAD_REQUEST);
 	}
+	
 }

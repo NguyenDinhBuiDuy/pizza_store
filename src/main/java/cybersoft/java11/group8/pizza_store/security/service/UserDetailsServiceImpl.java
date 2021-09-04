@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -23,14 +25,16 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 	@Autowired
 	private UserRepository repository;
 	
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<User> user = repository.findByUsername(username);
 		
-		if(!user.isPresent())
+		if(user.isEmpty())
 			throw new UsernameNotFoundException("Username is invalid.");
 		
 		Set<GrantedAuthority> authorities = getAuthorities(user.get().getRoleGroups());
+		
 		
 		return new UserDetailsDTO(user.get().getUsername(), user.get().getPassword(), authorities);
 	}
