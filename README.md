@@ -1,4 +1,5 @@
-## **The website is a sales/business support system for the food and beverage industry, specifically the pizzeria.**
+## **The website is a sales/business support system for the food and beverage industry, specifically the pizzeria. 
+read the Pizza_Store_OverView first.**
 
 MEMBER LIST
 
