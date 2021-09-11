@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import cybersoft.java11.group8.pizza_store.common_data.GenericServiceImpl;
@@ -24,13 +25,27 @@ import cybersoft.java11.group8.pizza_store.util.MapDTOToModel;
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class TableNumberServiceImpl extends GenericServiceImpl<OrderDetail, Long> implements TableNumberService {
 	
 	TableNumberRepository _tableNumberlRepository;
 	PizzaRepository _pizzaRepository;
 	BeverageRepository _BeverageRepository;
 	MapDTOToModel mapper;
+	
+	@Autowired
+	public TableNumberServiceImpl(JpaRepository<OrderDetail, Long> repository,
+			TableNumberRepository _tableNumberlRepository, PizzaRepository _pizzaRepository,
+			BeverageRepository _BeverageRepository, MapDTOToModel mapper) {
+		super(repository);
+		this._tableNumberlRepository = _tableNumberlRepository;
+		this._pizzaRepository = _pizzaRepository;
+		this._BeverageRepository = _BeverageRepository;
+		this.mapper = mapper;
+	}
+	
+	
+	
+	
 	
 //	@Override
 //	public OrderDetail save(@Valid CreateOrderDetailDTO dto) {

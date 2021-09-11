@@ -5,8 +5,6 @@ import java.util.Iterator;
 import java.util.Optional;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -22,6 +20,7 @@ import cybersoft.java11.group8.pizza_store.user.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
+	
 	@Autowired
 	private UserRepository repository;
 	
