@@ -4,6 +4,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,14 +16,22 @@ import cybersoft.java11.group8.pizza_store.util.MapDTOToModel;
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class UserServiceImpl extends GenericServiceImpl<User, Long> implements UserService {
 
-	private UserRepository _repository;
+private UserRepository _repository;
 	
 	private PasswordEncoder passwordEncoder;
-	
+
 	private MapDTOToModel mapper;
+	
+	@Autowired
+	public UserServiceImpl(JpaRepository<User, Long> repository, UserRepository _repository,
+			PasswordEncoder passwordEncoder, MapDTOToModel mapper) {
+		super(repository);
+		this._repository = _repository;
+		this.passwordEncoder = passwordEncoder;
+		this.mapper = mapper;
+	}
 
 	@Override
 	public User save(CreateUserDTO dto) {

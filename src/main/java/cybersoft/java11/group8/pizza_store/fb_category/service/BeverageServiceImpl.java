@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import cybersoft.java11.group8.pizza_store.common_data.GenericServiceImpl;
@@ -23,7 +24,7 @@ import cybersoft.java11.group8.pizza_store.warehouse.repository.RawMaterialRepos
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
+
 public class BeverageServiceImpl extends GenericServiceImpl<Beverage, Long> implements BeverageService {
 
 	private BeverageRepository _beverageRepository;
@@ -31,6 +32,17 @@ public class BeverageServiceImpl extends GenericServiceImpl<Beverage, Long> impl
 	private RawMaterialRepository _rawMaterialRepository;
 	
 	private MapDTOToModel mapper;
+	
+	@Autowired
+	public BeverageServiceImpl(JpaRepository<Beverage, Long> repository,
+			BeverageRepository beverageRepository, 
+			RawMaterialRepository rawMaterialRepository,
+			MapDTOToModel mapper) {
+		super(repository);
+		this._beverageRepository = beverageRepository;
+		this._rawMaterialRepository = rawMaterialRepository;
+		this.mapper = mapper;
+	}
 
 	@Override
 	public Beverage save(@Valid CreateBeverageDTO dto) {

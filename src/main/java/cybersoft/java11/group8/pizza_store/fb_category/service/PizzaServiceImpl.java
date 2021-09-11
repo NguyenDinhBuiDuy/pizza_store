@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import cybersoft.java11.group8.pizza_store.common_data.GenericServiceImpl;
@@ -28,14 +29,22 @@ import cybersoft.java11.group8.pizza_store.warehouse.repository.RawMaterialRepos
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class PizzaServiceImpl extends GenericServiceImpl<Pizza, Long> implements PizzaService {
-
+	
 	private PizzaRepository _pizzaRepository;
 	private RawMaterialRepository _rawMaterialRepository;
 	private ToppingRepository _toppingRepository;
 	private MapDTOToModel mapper;
-
+	
+	@Autowired
+	public PizzaServiceImpl(JpaRepository<Pizza, Long> repository, PizzaRepository _pizzaRepository,
+			RawMaterialRepository _rawMaterialRepository, ToppingRepository _toppingRepository, MapDTOToModel mapper) {
+		super(repository);
+		this._pizzaRepository = _pizzaRepository;
+		this._rawMaterialRepository = _rawMaterialRepository;
+		this._toppingRepository = _toppingRepository;
+		this.mapper = mapper;
+	}
 	private static final Logger log = LoggerFactory.getLogger(PizzaServiceImpl.class);
 
 	@Override

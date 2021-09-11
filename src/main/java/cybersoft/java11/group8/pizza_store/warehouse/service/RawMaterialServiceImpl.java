@@ -6,6 +6,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import cybersoft.java11.group8.pizza_store.common_data.GenericServiceImpl;
@@ -18,13 +19,21 @@ import cybersoft.java11.group8.pizza_store.warehouse.repository.SupplierReposito
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class RawMaterialServiceImpl extends GenericServiceImpl<RawMaterial, Long> implements RawMaterialService {
 
-	
 	private RawMaterialRepository rawMaterialRepository;
 	private SupplierRepository supplierRepository;
 	private MapDTOToModel<Object, RawMaterial> mapper;
+	
+	@Autowired
+	public RawMaterialServiceImpl(JpaRepository<RawMaterial, Long> repository,
+			RawMaterialRepository rawMaterialRepository, SupplierRepository supplierRepository,
+			MapDTOToModel<Object, RawMaterial> mapper) {
+		super(repository);
+		this.rawMaterialRepository = rawMaterialRepository;
+		this.supplierRepository = supplierRepository;
+		this.mapper = mapper;
+	}
 
 	@Override
 	public RawMaterial save(CreateRawMaterialDto dto) {

@@ -48,3 +48,4 @@ public class Order extends AbstractEntity {
 		return this;
 		
 	}
+}
