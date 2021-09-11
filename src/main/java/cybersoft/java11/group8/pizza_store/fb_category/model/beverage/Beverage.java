@@ -10,7 +10,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 import cybersoft.java11.group8.pizza_store.fb_category.model.FBCategory;
 import cybersoft.java11.group8.pizza_store.order.model.OrderDetail;
@@ -24,10 +23,8 @@ import lombok.Setter;
 @Table (name = "pizza_store_Beverage")
 public class Beverage extends FBCategory {
 	
-	@NotNull (message = "{beverage.sugar_percent.notnull}")
 	private SugarPercent sugarPercent;
 	
-	@NotNull (message = "{beverage.drink_type.notnull}")
 	private DrinkType drinkType;
 	
 	@ManyToMany (cascade = {CascadeType.PERSIST, CascadeType.MERGE})

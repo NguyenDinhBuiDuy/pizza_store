@@ -1,5 +1,6 @@
 package cybersoft.java11.group8.pizza_store.warehouse.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -26,13 +27,13 @@ import cybersoft.java11.group8.pizza_store.warehouse.service.RawMaterialService;
 @RequestMapping("/api/raw-material")
 public class RawMaterialController {
 	@Autowired
-	private RawMaterialService service;
+	private RawMaterialService rawMaterialService;
 	
 	@PostMapping("")
 	public ResponseEntity<Object> save(@Valid @RequestBody CreateRawMaterialDto dto, BindingResult errors){
 		if(errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
-		RawMaterial newRawMaterial = service.save(dto);
+		RawMaterial newRawMaterial = rawMaterialService.save(dto);
 		return ResponseHandler.getResponse(newRawMaterial, HttpStatus.CREATED);
 	}
 	
@@ -40,9 +41,19 @@ public class RawMaterialController {
 	public ResponseEntity<Object> findRawMaterialByName(@PathVariable("raw-material-name") String name){
 		if(name == null)
 			return ResponseHandler.getResponse("Please enter raw material name.", HttpStatus.BAD_REQUEST);
-		Optional<RawMaterial> rawMaterial = service.findRawMaterialByName(name);
+		Optional<RawMaterial> rawMaterial = rawMaterialService.findRawMaterialByName(name);
 		if(rawMaterial.isEmpty())
 			return ResponseHandler.getResponse("Raw material name not found.", HttpStatus.NOT_FOUND);
+		return ResponseHandler.getResponse(rawMaterial, HttpStatus.OK);
+	}
+	
+	@GetMapping("/{supplier-name}/raw_material")
+	public ResponseEntity<Object> findRawMaterialBySupplierName(@PathVariable("supplier-name") String name){
+		if(name == null)
+			return ResponseHandler.getResponse("Please enter supplier name.", HttpStatus.BAD_REQUEST);
+		List<RawMaterial> rawMaterial = rawMaterialService.findRawMaterialBySupplierName(name);
+		if(rawMaterial.isEmpty())
+			return ResponseHandler.getResponse("Material is not found from supplier.", HttpStatus.NOT_FOUND);
 		return ResponseHandler.getResponse(rawMaterial, HttpStatus.OK);
 	}
 	
@@ -52,11 +63,11 @@ public class RawMaterialController {
 													BindingResult errors){
 		if(rawMaterialId == null)
 			return ResponseHandler.getResponse("Please enter raw material id.", HttpStatus.BAD_REQUEST);
-		if(!service.existById(rawMaterialId))
+		if(!rawMaterialService.existById(rawMaterialId))
 			return ResponseHandler.getResponse("Raw material id not found.", HttpStatus.NOT_FOUND);
 		if(errors.hasErrors())
 			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
-		RawMaterial updateRawMaterial = service.updateRawMaterialInfo(dto, rawMaterialId);
+		RawMaterial updateRawMaterial = rawMaterialService.updateRawMaterialInfo(dto, rawMaterialId);
 		return ResponseHandler.getResponse(updateRawMaterial, HttpStatus.OK);
 	}
 	
@@ -64,9 +75,9 @@ public class RawMaterialController {
 	public ResponseEntity<Object> deleteRawMaterial(@PathVariable("raw-material-id") Long rawMaterialId){
 		if(rawMaterialId == null)
 			return ResponseHandler.getResponse("Please enter raw material id.", HttpStatus.BAD_REQUEST);
-		if(!service.existById(rawMaterialId))
+		if(!rawMaterialService.existById(rawMaterialId))
 			return ResponseHandler.getResponse("Raw material id does not exist.", HttpStatus.BAD_REQUEST);
-		service.deleteById(rawMaterialId);
+		rawMaterialService.deleteById(rawMaterialId);
 		return ResponseHandler.getResponse("Remove the raw material successfully.", HttpStatus.OK);
 	}
 }

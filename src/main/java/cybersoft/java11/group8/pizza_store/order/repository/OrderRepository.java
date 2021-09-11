@@ -7,5 +7,5 @@ import cybersoft.java11.group8.pizza_store.order.model.Order;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Order, Long>{
-
+	
 }
