@@ -30,9 +30,15 @@ import cybersoft.java11.group8.pizza_store.role.validation.annotation.ExistUserN
 @RestController
 @RequestMapping ("api/role_group")
 public class RoleGruopController {
-	@Autowired
+	
 	private RoleGroupService _service;
 	
+	@Autowired
+	public RoleGruopController(RoleGroupService _service) {
+		super();
+		this._service = _service;
+	}
+
 	@GetMapping("")
 	public ResponseEntity<Object> findAllGruops(){
 		List<RoleGroup> roleGroups = _service.findAll();

@@ -12,12 +12,17 @@ import cybersoft.java11.group8.pizza_store.warehouse.repository.RawMaterialRepos
 import cybersoft.java11.group8.pizza_store.warehouse.validation.annotation.ExistRawMaterialName;
 
 public class ExistRawMaterialNameValidator implements ConstraintValidator<ExistRawMaterialName, String> {
-	
-	@Autowired
-	private RawMaterialRepository rawMaterialRepository;
+
+	private RawMaterialRepository _rawMaterialRepository;
 	
 	private String message;
 	
+	@Autowired
+	public ExistRawMaterialNameValidator(RawMaterialRepository _rawMaterialRepository) {
+		super();
+		this._rawMaterialRepository = _rawMaterialRepository;
+	}
+
 	@Override
 	public void initialize(ExistRawMaterialName constraintAnnotation) {
 		this.message = constraintAnnotation.message();

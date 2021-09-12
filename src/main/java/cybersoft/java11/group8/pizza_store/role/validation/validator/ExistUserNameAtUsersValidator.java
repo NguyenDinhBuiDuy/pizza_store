@@ -11,9 +11,14 @@ import cybersoft.java11.group8.pizza_store.user.repository.UserRepository;
 
 public class ExistUserNameAtUsersValidator implements ConstraintValidator<ExistUserNameAtUsers, String>{
 	
-	@Autowired
 	private UserRepository _userRepository;
 	private String message ;
+	
+	@Autowired
+	public ExistUserNameAtUsersValidator(UserRepository _userRepository) {
+		super();
+		this._userRepository = _userRepository;
+	}
 	
 	@Override
 	public void initialize(ExistUserNameAtUsers constraintAnnotation) {

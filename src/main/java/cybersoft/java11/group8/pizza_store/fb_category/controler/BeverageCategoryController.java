@@ -33,8 +33,15 @@ import cybersoft.java11.group8.pizza_store.warehouse.validation.annotation.Exist
 @RequestMapping("/api/beverage")
 public class BeverageCategoryController {
 
-	@Autowired 
+	
 	BeverageService _beverageService;
+	
+	@Autowired
+	public BeverageCategoryController(BeverageService _beverageService) {
+		super();
+		this._beverageService = _beverageService;
+	}
+
 	
 	@GetMapping("")
 	public ResponseEntity<Object> findAllBeverage(){

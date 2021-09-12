@@ -27,11 +27,23 @@ import cybersoft.java11.group8.pizza_store.order.service.OrderService;
 import lombok.AllArgsConstructor;
 
 @RestController
-@AllArgsConstructor
-@RequestMapping ("/api/order")
+@RequestMapping ("/api/odrer")
 public class OrderController {
-	@Autowired
+	
 	private OrderService _orderService;
+	private OrderDetailService _orderDetailService;
+	private TableNumberService _tableNumberService;
+	
+	@Autowired
+	public OrderController(OrderService _orderService, OrderDetailService _orderDetailService,
+			TableNumberService _tableNumberService) {
+		super();
+		this._orderService = _orderService;
+		this._orderDetailService = _orderDetailService;
+		this._tableNumberService = _tableNumberService;
+	}
+	
+	
 	
 	@GetMapping("")
 	public ResponseEntity<Object> findAllOrders(){
@@ -81,4 +93,53 @@ public class OrderController {
 		Order addOrderDetail = _orderService.addOrderDetail(orderDetail, orderId);
 		return ResponseHandler.getResponse(addOrderDetail, HttpStatus.CREATED);
 	}
+	
+	@PutMapping("/{order-id}/table_number")
+	public ResponseEntity<Object> addTableNumber(@Valid @NotBlank @RequestBody TableNumber tableNumber , @PathVariable ("order-id") Long orderId, BindingResult errors){
+		if (errors.hasErrors())
+			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
+		
+		if (!_orderService.existOrder(orderId))
+			return ResponseHandler.getResponse("there is no order id: " + orderId, HttpStatus.BAD_REQUEST);
+		
+		if (!_tableNumberService.existTableNumber(tableNumber.getId()))
+			return ResponseHandler.getResponse("there is no order id: " + tableNumber.getId(), HttpStatus.BAD_REQUEST);
+		
+		if (tableNumber.getTableStatus().equals(TableStatus.ORDERED))
+			return ResponseHandler.getResponse("table is ordered", HttpStatus.BAD_REQUEST);
+		
+		Order updateOrder  = new Order();
+		
+		updateOrder = _orderService.addTableNumber(tableNumber,orderId);
+		return ResponseHandler.getResponse(updateOrder, HttpStatus.CREATED);
+	}
+	
+	
+	@DeleteMapping("/{order-id}")
+	public ResponseEntity<Object> deleteOrder( @PathVariable ("order-id") Long beverageId){
+		
+		if (!_orderService.existOrder(beverageId))
+			return ResponseHandler.getResponse("there is no order id: " + beverageId, HttpStatus.BAD_REQUEST);
+		
+		_orderService.deleteById(beverageId);
+		return ResponseHandler.getResponse("delete successfull", HttpStatus.OK);
+	}
+
+//	@DeleteMapping("/{beverage-id}/raw_material")
+//	public ResponseEntity<Object> deleteOrderDetail(@RequestBody S , @PathVariable ("beverage-id") Long beverageId, BindingResult errors){
+//		
+//		if (errors.hasErrors())
+//			return ResponseHandler.getResponse(errors, HttpStatus.BAD_REQUEST);
+//		
+//		if (!_orderService.existBeverage(beverageId))
+//			return ResponseHandler.getResponse("there is no beverage id: " + beverageId, HttpStatus.BAD_REQUEST);
+//		
+//		boolean result = _orderService.removeRawMeterialInBeverage(RawMaterialName, beverageId);
+//		
+//		if (!result) 
+//			return ResponseHandler.getResponse("there is no RawMaterial: " + RawMaterialName, HttpStatus.BAD_REQUEST);
+//	
+//		return ResponseHandler.getResponse("remove raw material: " + RawMaterialName + "successfull", HttpStatus.OK);
+//	}
+
 }

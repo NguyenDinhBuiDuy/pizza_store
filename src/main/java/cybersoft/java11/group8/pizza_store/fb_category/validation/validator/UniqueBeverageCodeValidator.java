@@ -13,11 +13,17 @@ import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.Uni
 
 public class UniqueBeverageCodeValidator implements ConstraintValidator<UniqueBeverageCode, String> {
 
-	@Autowired
+	
 	BeverageRepository _BeverageRepository;
 	
 	String message;
 	
+	@Autowired
+	public UniqueBeverageCodeValidator(BeverageRepository _BeverageRepository) {
+		super();
+		this._BeverageRepository = _BeverageRepository;
+	}
+
 	@Override
 	public void initialize(UniqueBeverageCode constraintAnnotation) {
 		this.message = constraintAnnotation.message();

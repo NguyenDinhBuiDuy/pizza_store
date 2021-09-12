@@ -22,11 +22,16 @@ import cybersoft.java11.group8.pizza_store.security.jwt.JwtUtils;
 
 @RestController
 public class AuthController {
-	@Autowired
+
 	private AuthenticationManager authenticationManager;
+	private JwtUtils jwtUtils;
 	
 	@Autowired
-	private JwtUtils jwtUtils;
+	public AuthController(AuthenticationManager authenticationManager, JwtUtils jwtUtils) {
+		super();
+		this.authenticationManager = authenticationManager;
+		this.jwtUtils = jwtUtils;
+	}
 
 	@PostMapping("/login")
 	public ResponseEntity<Object> login(@Valid @RequestBody LoginDTO dto,

@@ -10,9 +10,13 @@ import cybersoft.java11.group8.pizza_store.role.validation.annotation.ExistRoleN
 
 public class ExistRoleNameValidator implements ConstraintValidator<ExistRoleNameAtRoles, String> {
 
-	@Autowired
 	private RoleRepository _roleRepository;
 	private String message;
+	
+	public ExistRoleNameValidator(RoleRepository _roleRepository) {
+		super();
+		this._roleRepository = _roleRepository;
+	}
 
 	@Override
 	public void initialize(ExistRoleNameAtRoles constraintAnnotation) {

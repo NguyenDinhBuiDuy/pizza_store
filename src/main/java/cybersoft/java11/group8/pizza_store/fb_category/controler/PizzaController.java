@@ -35,11 +35,14 @@ import cybersoft.java11.group8.pizza_store.warehouse.validation.annotation.Exist
 @RequestMapping("/api/pizza")
 
 public class PizzaController {
-	@Autowired 
-	PizzaService _pizzaService;
-	
+
+	private PizzaService _pizzaService;
+
 	@Autowired
-	 PizzaRepository _pizzaRepository;
+	public PizzaController(PizzaService _pizzaService) {
+		super();
+		this._pizzaService = _pizzaService;
+	}
 	
 	@GetMapping("")
 	public ResponseEntity<Object> findAllPizza(){

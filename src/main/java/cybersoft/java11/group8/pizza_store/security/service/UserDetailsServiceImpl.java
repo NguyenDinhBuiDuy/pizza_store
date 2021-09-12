@@ -22,10 +22,15 @@ import cybersoft.java11.group8.pizza_store.user.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{
-	@Autowired
+
 	private UserRepository repository;
 	
-	
+	@Autowired
+	public UserDetailsServiceImpl(UserRepository repository) {
+		super();
+		this.repository = repository;
+	}
+
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Optional<User> user = repository.findByUsername(username);

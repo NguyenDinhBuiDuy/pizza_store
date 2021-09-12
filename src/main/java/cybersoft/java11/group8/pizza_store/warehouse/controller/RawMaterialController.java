@@ -27,9 +27,15 @@ import cybersoft.java11.group8.pizza_store.warehouse.service.RawMaterialService;
 @RestController
 @RequestMapping("/api/raw-material")
 public class RawMaterialController {
-	@Autowired
-	private RawMaterialService rawMaterialService;
 	
+	private RawMaterialService service;
+	
+	@Autowired
+	public RawMaterialController(RawMaterialService service) {
+		super();
+		this.service = service;
+	}
+
 	@PostMapping("")
 	public ResponseEntity<Object> save(@Valid @RequestBody CreateRawMaterialDto dto, BindingResult errors){
 		if(errors.hasErrors())

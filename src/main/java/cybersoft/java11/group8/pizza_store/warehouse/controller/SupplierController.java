@@ -26,9 +26,15 @@ import cybersoft.java11.group8.pizza_store.warehouse.service.SupplierService;
 @RestController
 @RequestMapping("/api/supplier")
 public class SupplierController {
-	@Autowired
-	private SupplierService supplierService;
 	
+	private SupplierService service;
+	
+	@Autowired
+	public SupplierController(SupplierService service) {
+		super();
+		this.service = service;
+	}
+
 	@PostMapping("")
 	public ResponseEntity<Object> save(@Valid @RequestBody CreateSupplierDto dto, BindingResult errors){
 		if(errors.hasErrors())

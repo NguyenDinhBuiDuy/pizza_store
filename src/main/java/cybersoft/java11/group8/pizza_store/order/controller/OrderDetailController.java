@@ -27,13 +27,22 @@ import cybersoft.java11.group8.pizza_store.order.service.OrderDetailService;
 import lombok.AllArgsConstructor;
 
 @RestController
-@AllArgsConstructor
 @RequestMapping("/api/oder_detail")
 public class OrderDetailController {
-	@Autowired
+
 	private OrderDetailService _orderDetailService;
 	private PizzaService _pizzaService;
 	private BeverageService _beveragService;
+	
+	public OrderDetailController(OrderDetailService _orderDetailService, PizzaService _pizzaService,
+			BeverageService _beveragService) {
+		super();
+		this._orderDetailService = _orderDetailService;
+		this._pizzaService = _pizzaService;
+		this._beveragService = _beveragService;
+	}
+	
+	
 
 	@GetMapping("")
 	public ResponseEntity<Object> findAllOrderDetails() {
@@ -118,5 +127,7 @@ public class OrderDetailController {
 		updateOrderDetail = _orderDetailService.update(dto, orderDetailId);
 		return ResponseHandler.getResponse(updateOrderDetail, HttpStatus.CREATED);
 	}
+
+	
 
 }
