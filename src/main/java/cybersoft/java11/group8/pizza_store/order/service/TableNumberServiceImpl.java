@@ -25,7 +25,6 @@ import cybersoft.java11.group8.pizza_store.util.MapDTOToModel;
 import lombok.AllArgsConstructor;
 
 @Service
-
 public class TableNumberServiceImpl extends GenericServiceImpl<OrderDetail, Long> implements TableNumberService {
 	
 	TableNumberRepository _tableNumberlRepository;
@@ -68,15 +67,15 @@ public class TableNumberServiceImpl extends GenericServiceImpl<OrderDetail, Long
 //		return _orderDetailRepository.save(model);
 //		
 //	}
-	
+//	
 	@Override
 	public boolean existTableNumber(Long tableId) {
 	
 		return _tableNumberlRepository.existsById(tableId);
 	}
 
-
-
+//
+//
 //	@Override
 //	public OrderDetail update(@Valid CreateOrderDetailDTO dto, Long orderDetailId) {
 //		OrderDetail model = _orderDetailRepository.getOne(orderDetailId);
@@ -103,6 +102,6 @@ public class TableNumberServiceImpl extends GenericServiceImpl<OrderDetail, Long
 //		
 //		return _orderDetailRepository.save(model);
 //	}
-//
+
 
 }
