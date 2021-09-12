@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import cybersoft.java11.group8.pizza_store.common_data.GenericServiceImpl;
@@ -16,13 +17,22 @@ import cybersoft.java11.group8.pizza_store.warehouse.repository.RawMaterialRepos
 import cybersoft.java11.group8.pizza_store.warehouse.repository.SupplierRepository;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 @Service
 public class RawMaterialServiceImpl extends GenericServiceImpl<RawMaterial, Long> implements RawMaterialService {
-	@Autowired
+
 	private RawMaterialRepository rawMaterialRepository;
 	private SupplierRepository supplierRepository;
 	private MapDTOToModel<Object, RawMaterial> mapper;
+	
+	@Autowired
+	public RawMaterialServiceImpl(JpaRepository<RawMaterial, Long> repository,
+			RawMaterialRepository rawMaterialRepository, SupplierRepository supplierRepository,
+			MapDTOToModel<Object, RawMaterial> mapper) {
+		super(repository);
+		this.rawMaterialRepository = rawMaterialRepository;
+		this.supplierRepository = supplierRepository;
+		this.mapper = mapper;
+	}
 
 	@Override
 	public RawMaterial save(CreateRawMaterialDto dto) {

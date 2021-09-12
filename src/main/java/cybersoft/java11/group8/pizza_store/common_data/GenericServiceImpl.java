@@ -11,8 +11,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import cybersoft.java11.group8.pizza_store.common_data.model.AbstractEntity;
 import cybersoft.java11.group8.pizza_store.fb_category.model.pizza.Pizza;
 
+@AllArgsConstructor
 public class GenericServiceImpl <T extends AbstractEntity,ID> implements GenericService<T, ID> {
-	@Autowired
+	
 	private JpaRepository<T,ID> repository;
 	
 	@Override

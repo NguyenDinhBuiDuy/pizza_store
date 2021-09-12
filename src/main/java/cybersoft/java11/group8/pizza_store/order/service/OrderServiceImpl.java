@@ -1,6 +1,7 @@
 package cybersoft.java11.group8.pizza_store.order.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import cybersoft.java11.group8.pizza_store.common_data.GenericServiceImpl;
@@ -13,12 +14,19 @@ import cybersoft.java11.group8.pizza_store.util.MapDTOToModel;
 import lombok.AllArgsConstructor;
 
 @Service
-@AllArgsConstructor
 public class OrderServiceImpl extends GenericServiceImpl<Order, Long> implements OrderService {
+	
+	OrderRepository _orderRepository;
+	MapDTOToModel mapper;
+	
 	@Autowired
-	private OrderRepository _orderRepository;
-	private MapDTOToModel<Object, Order> mapper;
-
+	public OrderServiceImpl(JpaRepository<Order, Long> repository, OrderRepository _orderRepository,
+			MapDTOToModel mapper) {
+		super(repository);
+		this._orderRepository = _orderRepository;
+		this.mapper = mapper;
+	}
+	
 	@Override
 	public Order save(CreateOrderDTO dto) {
 		Order model = new Order();
