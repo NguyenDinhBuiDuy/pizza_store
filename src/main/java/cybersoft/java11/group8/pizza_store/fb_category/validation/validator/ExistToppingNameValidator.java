@@ -16,10 +16,17 @@ import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.Uni
 
 public class ExistToppingNameValidator implements ConstraintValidator<ExistToppingName, String> {
 
-	@Autowired
-	ToppingRepository _toppingRepository;
 	
-	String message;
+
+	private ToppingRepository _toppingRepository;
+	
+	private String message;
+	
+	@Autowired
+	public ExistToppingNameValidator(ToppingRepository _toppingRepository) {
+		super();
+		this._toppingRepository = _toppingRepository;
+	}
 	
 	@Override
 	public void initialize(ExistToppingName constraintAnnotation) {

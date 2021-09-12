@@ -15,10 +15,15 @@ import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.Uni
 
 public class UniquePizzaCodeValidator implements ConstraintValidator<UniquePizzaCode, String> {
 
-	@Autowired
-	PizzaRepository _PizzaRepository;
-	String message;
+	private PizzaRepository _PizzaRepository;
+	private String message;
 	
+	@Autowired
+	public UniquePizzaCodeValidator(PizzaRepository _PizzaRepository) {
+		super();
+		this._PizzaRepository = _PizzaRepository;
+	}
+
 	@Override
 	public void initialize(UniquePizzaCode constraintAnnotation) {
 		this.message = constraintAnnotation.message();

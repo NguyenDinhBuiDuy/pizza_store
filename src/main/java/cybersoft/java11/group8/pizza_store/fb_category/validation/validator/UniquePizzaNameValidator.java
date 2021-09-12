@@ -16,11 +16,15 @@ import cybersoft.java11.group8.pizza_store.fb_category.validation.annotation.Uni
 
 public class UniquePizzaNameValidator implements ConstraintValidator<UniquePizzaName, String> {
 
-	@Autowired
 	PizzaRepository _pizzaRepository;
-	
 	String message;
 	
+	@Autowired
+	public UniquePizzaNameValidator(PizzaRepository _pizzaRepository) {
+		super();
+		this._pizzaRepository = _pizzaRepository;
+	}
+
 	@Override
 	public void initialize(UniquePizzaName constraintAnnotation) {
 		this.message = constraintAnnotation.message();

@@ -21,11 +21,18 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 public class JwtAuthorizationFilter extends OncePerRequestFilter{
 	private static final Logger logger = LoggerFactory.getLogger(JwtAuthorizationFilter.class);
-	@Autowired
+	
 	private JwtUtils jwtUtils;
+	private UserDetailsService service;
 	
 	@Autowired
-	private UserDetailsService service;
+	public JwtAuthorizationFilter(JwtUtils jwtUtils, UserDetailsService service) {
+		super();
+		this.jwtUtils = jwtUtils;
+		this.service = service;
+	}
+
+
 
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)

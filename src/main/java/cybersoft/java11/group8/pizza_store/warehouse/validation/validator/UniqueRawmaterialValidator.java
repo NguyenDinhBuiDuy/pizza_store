@@ -19,11 +19,16 @@ import cybersoft.java11.group8.pizza_store.warehouse.validation.annotation.Uniqu
 
 public class UniqueRawmaterialValidator implements ConstraintValidator<UniqueRawMaterialName, String> {
 
+	private RawMaterialRepository _rawMaterialRepository;
+	
+	private String message;
+	
 	@Autowired
-	RawMaterialRepository _rawMaterialRepository;
-	
-	String message;
-	
+	public UniqueRawmaterialValidator(RawMaterialRepository _rawMaterialRepository) {
+		super();
+		this._rawMaterialRepository = _rawMaterialRepository;
+	}
+
 	@Override
 	public void initialize(UniqueRawMaterialName constraintAnnotation) {
 		this.message = constraintAnnotation.message();

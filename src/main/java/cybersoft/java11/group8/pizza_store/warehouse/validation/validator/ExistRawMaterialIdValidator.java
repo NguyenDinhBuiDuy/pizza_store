@@ -14,11 +14,17 @@ import cybersoft.java11.group8.pizza_store.warehouse.validation.annotation.Exist
 
 public class ExistRawMaterialIdValidator implements ConstraintValidator<ExistRawMaterialId, Long> {
 
-	@Autowired
+	
 	private RawMaterialRepository _rawMaterialRepository;
 	
 	private String message;
 	
+	@Autowired
+	public ExistRawMaterialIdValidator(RawMaterialRepository _rawMaterialRepository) {
+		super();
+		this._rawMaterialRepository = _rawMaterialRepository;
+	}
+
 	@Override
 	public void initialize(ExistRawMaterialId constraintAnnotation) {
 		this.message = constraintAnnotation.message();

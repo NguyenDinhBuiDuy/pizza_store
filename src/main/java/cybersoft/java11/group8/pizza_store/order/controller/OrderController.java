@@ -32,13 +32,23 @@ import lombok.AllArgsConstructor;
 
 
 @RestController
-@AllArgsConstructor
 @RequestMapping ("/api/odrer")
 public class OrderController {
 	
-	OrderService _orderService;
-	OrderDetailService _orderDetailService;
-	TableNumberService _tableNumberService;
+	private OrderService _orderService;
+	private OrderDetailService _orderDetailService;
+	private TableNumberService _tableNumberService;
+	
+	@Autowired
+	public OrderController(OrderService _orderService, OrderDetailService _orderDetailService,
+			TableNumberService _tableNumberService) {
+		super();
+		this._orderService = _orderService;
+		this._orderDetailService = _orderDetailService;
+		this._tableNumberService = _tableNumberService;
+	}
+	
+	
 	
 	@GetMapping("")
 	public ResponseEntity<Object> findAllOrders(){
@@ -128,7 +138,7 @@ public class OrderController {
 		_orderService.deleteById(beverageId);
 		return ResponseHandler.getResponse("delete successfull", HttpStatus.OK);
 	}
-	
+
 //	@DeleteMapping("/{beverage-id}/raw_material")
 //	public ResponseEntity<Object> deleteOrderDetail(@RequestBody S , @PathVariable ("beverage-id") Long beverageId, BindingResult errors){
 //		

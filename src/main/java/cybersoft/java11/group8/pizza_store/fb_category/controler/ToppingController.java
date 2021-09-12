@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -24,12 +25,18 @@ import cybersoft.java11.group8.pizza_store.fb_category.service.ToppingService;
 import io.swagger.models.Response;
 import lombok.AllArgsConstructor;
 
-@AllArgsConstructor
 @RestController
 @RequestMapping ("/api/topping")
 public class ToppingController {
 	
-	ToppingService _ToppingService;
+	private ToppingService _ToppingService;
+	
+	@Autowired
+	public ToppingController(ToppingService _ToppingService) {
+		super();
+		this._ToppingService = _ToppingService;
+	}
+	
 	
 	@GetMapping("")
 	public ResponseEntity<Object> findAllTopping(){
@@ -59,6 +66,8 @@ public class ToppingController {
 		topping = _ToppingService.save(dto);
 		return ResponseHandler.getResponse(topping, HttpStatus.CREATED);
 	}
+
+
 	
 	
 

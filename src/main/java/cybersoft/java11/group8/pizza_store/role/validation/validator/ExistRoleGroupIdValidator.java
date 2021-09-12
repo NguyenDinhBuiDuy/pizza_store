@@ -12,12 +12,16 @@ import cybersoft.java11.group8.pizza_store.role.validation.annotation.CExistRole
 public class ExistRoleGroupIdValidator implements 
 ConstraintValidator<CExistRoleGroupId, Long>{
 	
-
-	
-	@Autowired
 	private RoleGroupService _roleGroupService;
 	private String message;
 	
+	@Autowired
+	public ExistRoleGroupIdValidator(RoleGroupService _roleGroupService) {
+		super();
+		this._roleGroupService = _roleGroupService;
+	}
+
+
 	@Override
 	public void initialize(CExistRoleGroupId constraintAnnotation) {
 		this.message = constraintAnnotation.message();

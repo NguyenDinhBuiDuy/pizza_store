@@ -11,10 +11,15 @@ import cybersoft.java11.group8.pizza_store.role.validation.annotation.UniqueRole
 
 public class UniqueRolenameValidator implements ConstraintValidator<UniqueRoleName, String> {
 	
-	@Autowired
 	private RoleService _service;
 	private String message;
 	
+	@Autowired
+	public UniqueRolenameValidator(RoleService _service) {
+		super();
+		this._service = _service;
+	}
+
 	@Override
 	public void initialize (UniqueRoleName constraintAnnotation) {
 		this.message = constraintAnnotation.message();

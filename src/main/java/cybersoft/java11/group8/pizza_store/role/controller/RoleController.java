@@ -28,8 +28,14 @@ import cybersoft.java11.group8.pizza_store.role.service.RoleService;
 @RestController
 @RequestMapping("/api/role")
 public class RoleController {
-	@Autowired
+
 	private RoleService _service;
+	
+	@Autowired
+	public RoleController(RoleService _service) {
+		super();
+		this._service = _service;
+	}
 
 	@PostMapping("")
 	public ResponseEntity<Object> save(@Valid @RequestBody CreateRoleDTO dto, BindingResult errors) {
