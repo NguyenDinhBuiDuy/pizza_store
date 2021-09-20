@@ -9,10 +9,13 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import cybersoft.java11.group8.pizza_store.user.util.UserStatus;
+import cybersoft.java11.group8.pizza_store.user.validation.annotation.PasswordMatch;
 import cybersoft.java11.group8.pizza_store.user.validation.annotation.UniqueUsername;
+import cybersoft.java11.group8.pizza_store.user.validation.annotation.ValidPassword;
 import lombok.Getter;
 import lombok.Setter;
 
+//@PasswordMatch(first = "password", second = "confirmPassword")
 @Getter
 @Setter
 public class CreateUserDTO {
@@ -22,8 +25,13 @@ public class CreateUserDTO {
 	@UniqueUsername
 	private String username;
 	
+	@ValidPassword
 	@NotBlank(message = "{user.password.notblank}")
 	private String password;
+	
+	@ValidPassword
+	@NotBlank(message = "{user.password.notblank}")
+	private String confirmPassword;
 	
 	@NotBlank(message = "{user.email.notblank}")
 	@Email
