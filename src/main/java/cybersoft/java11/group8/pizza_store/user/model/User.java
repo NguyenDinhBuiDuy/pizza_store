@@ -16,6 +16,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.Valid;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -27,8 +28,11 @@ import cybersoft.java11.group8.pizza_store.common_data.model.AbstractEntity;
 import cybersoft.java11.group8.pizza_store.role.model.Role;
 import cybersoft.java11.group8.pizza_store.role.model.RoleGroup;
 import cybersoft.java11.group8.pizza_store.user.util.UserStatus;
+import cybersoft.java11.group8.pizza_store.user.validation.annotation.PasswordMatch;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
+
 
 @Getter
 @Setter
@@ -42,6 +46,9 @@ public class User extends AbstractEntity {
 
 	@NotBlank(message = "{user.password.notblank}")
 	private String password;
+	
+	@NotBlank(message = "{user.password.notblank}")
+	private String confirmPassword;
 	
 	@NotBlank(message = "{user.email.notblank}")
 	@Email
